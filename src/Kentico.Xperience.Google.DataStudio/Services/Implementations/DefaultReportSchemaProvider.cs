@@ -21,13 +21,15 @@ namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
             return new FieldSet[]
             {
                 DataStudioConstants.activityFieldSet,
+                DataStudioConstants.automationStateFieldSet,
                 DataStudioConstants.contactFieldSet,
                 DataStudioConstants.contactGroupFieldSet,
                 DataStudioConstants.contactGroupMemberFieldSet,
                 DataStudioConstants.countryFieldSet,
                 DataStudioConstants.siteFieldSet,
                 DataStudioConstants.stateFieldSet,
-                DataStudioConstants.userFieldSet
+                DataStudioConstants.userFieldSet,
+                DataStudioConstants.workflowFieldSet
             };
         }
 

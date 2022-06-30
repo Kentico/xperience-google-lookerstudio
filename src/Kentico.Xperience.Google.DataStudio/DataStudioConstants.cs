@@ -1,9 +1,11 @@
 ﻿using CMS.Activities;
+using CMS.Automation;
 using CMS.ContactManagement;
 using CMS.DataEngine;
 using CMS.Globalization;
 using CMS.Membership;
 using CMS.SiteProvider;
+using CMS.WorkflowEngine;
 
 using Kentico.Xperience.Google.DataStudio.Models;
 
@@ -64,6 +66,48 @@ namespace Kentico.Xperience.Google.DataStudio
                 {
                     Name = nameof(ActivityInfo.ActivityType),
                     DataType = FieldDataType.Text
+                }
+            }
+        };
+
+
+        public static FieldSet automationStateFieldSet = new FieldSet
+        {
+            ObjectType = AutomationStateInfo.OBJECT_TYPE,
+            DateFilterField = nameof(AutomationStateInfo.StateCreated),
+            Fields = new FieldDefinition[]
+            {
+                new FieldDefinition {
+                    Name = nameof(AutomationStateInfo.StateCreated),
+                    DataType = FieldDataType.DateTime
+                },
+                new FieldDefinition {
+                    Name = nameof(AutomationStateInfo.StateID),
+                    DataType = FieldDataType.Integer
+                },
+                new FieldDefinition {
+                    Name = nameof(AutomationStateInfo.StateStepID),
+                    DataType = FieldDataType.Integer
+                },
+                new FieldDefinition {
+                    Name = nameof(AutomationStateInfo.StateObjectID),
+                    DataType = FieldDataType.Integer
+                },
+                new FieldDefinition {
+                    Name = nameof(AutomationStateInfo.StateObjectType),
+                    DataType = FieldDataType.Text
+                },
+                new FieldDefinition {
+                    Name = nameof(AutomationStateInfo.StateWorkflowID),
+                    DataType = FieldDataType.Integer
+                },
+                new FieldDefinition {
+                    Name = nameof(AutomationStateInfo.StateStatus),
+                    DataType = FieldDataType.Integer
+                },
+                new FieldDefinition {
+                    Name = nameof(AutomationStateInfo.StateSiteID),
+                    DataType = FieldDataType.Integer
                 }
             }
         };
@@ -260,6 +304,35 @@ namespace Kentico.Xperience.Google.DataStudio
                 {
                     Name = nameof(UserInfo.UserCreated),
                     DataType = FieldDataType.DateTime
+                }
+            }
+        };
+
+
+        public static FieldSet workflowFieldSet = new FieldSet
+        {
+            ObjectType = WorkflowInfo.OBJECT_TYPE,
+            Fields = new FieldDefinition[]
+            {
+                new FieldDefinition
+                {
+                    Name = nameof(WorkflowInfo.WorkflowID),
+                    DataType = FieldDataType.Integer
+                },
+                new FieldDefinition
+                {
+                    Name = nameof(WorkflowInfo.WorkflowDisplayName),
+                    DataType = FieldDataType.Text
+                },
+                new FieldDefinition
+                {
+                    Name = nameof(WorkflowInfo.WorkflowType),
+                    DataType = FieldDataType.Integer
+                },
+                new FieldDefinition
+                {
+                    Name = nameof(WorkflowInfo.WorkflowEnabled),
+                    DataType = FieldDataType.Integer
                 }
             }
         };
