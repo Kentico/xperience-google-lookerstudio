@@ -2,6 +2,7 @@
 using CMS.Automation;
 using CMS.ContactManagement;
 using CMS.DataEngine;
+using CMS.DataProtection;
 using CMS.Globalization;
 using CMS.Membership;
 using CMS.SiteProvider;
@@ -73,7 +74,7 @@ namespace Kentico.Xperience.Google.DataStudio
 
         public static FieldSet automationStateFieldSet = new FieldSet
         {
-            ObjectType = AutomationStateInfo.OBJECT_TYPE,
+            ObjectType = "cms.automationstate",
             DateFilterField = nameof(AutomationStateInfo.StateCreated),
             Fields = new FieldDefinition[]
             {
@@ -108,6 +109,53 @@ namespace Kentico.Xperience.Google.DataStudio
                 new FieldDefinition {
                     Name = nameof(AutomationStateInfo.StateSiteID),
                     DataType = FieldDataType.Integer
+                }
+            }
+        };
+
+
+        public static FieldSet consentAgreementFieldSet = new FieldSet
+        {
+            ObjectType = ConsentAgreementInfo.OBJECT_TYPE,
+            DateFilterField = nameof(ConsentAgreementInfo.ConsentAgreementTime),
+            Fields = new FieldDefinition[]
+            {
+                new FieldDefinition {
+                    Name = nameof(ConsentAgreementInfo.ConsentAgreementTime),
+                    DataType = FieldDataType.DateTime
+                },
+                new FieldDefinition {
+                    Name = nameof(ConsentAgreementInfo.ConsentAgreementRevoked),
+                    DataType = FieldDataType.Boolean
+                },
+                new FieldDefinition {
+                    Name = nameof(ConsentAgreementInfo.ConsentAgreementContactID),
+                    DataType = FieldDataType.Integer
+                },
+                new FieldDefinition {
+                    Name = nameof(ConsentAgreementInfo.ConsentAgreementConsentID),
+                    DataType = FieldDataType.Integer
+                }
+            }
+        };
+
+
+        public static FieldSet consentFieldSet = new FieldSet
+        {
+            ObjectType = ConsentInfo.OBJECT_TYPE,
+            Fields = new FieldDefinition[]
+            {
+                new FieldDefinition {
+                    Name = nameof(ConsentInfo.ConsentID),
+                    DataType = FieldDataType.Integer,
+                },
+                new FieldDefinition {
+                    Name = nameof(ConsentInfo.ConsentLastModified),
+                    DataType = FieldDataType.DateTime
+                },
+                new FieldDefinition {
+                    Name = nameof(ConsentInfo.ConsentDisplayName),
+                    DataType = FieldDataType.Text
                 }
             }
         };
@@ -332,7 +380,7 @@ namespace Kentico.Xperience.Google.DataStudio
                 new FieldDefinition
                 {
                     Name = nameof(WorkflowInfo.WorkflowEnabled),
-                    DataType = FieldDataType.Integer
+                    DataType = FieldDataType.Boolean
                 }
             }
         };

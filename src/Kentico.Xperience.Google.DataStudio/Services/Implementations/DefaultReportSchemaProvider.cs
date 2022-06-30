@@ -22,6 +22,8 @@ namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
             {
                 DataStudioConstants.activityFieldSet,
                 DataStudioConstants.automationStateFieldSet,
+                DataStudioConstants.consentAgreementFieldSet,
+                DataStudioConstants.consentFieldSet,
                 DataStudioConstants.contactFieldSet,
                 DataStudioConstants.contactGroupFieldSet,
                 DataStudioConstants.contactGroupMemberFieldSet,
