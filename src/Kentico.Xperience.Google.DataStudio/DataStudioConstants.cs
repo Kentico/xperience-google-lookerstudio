@@ -284,6 +284,128 @@ namespace Kentico.Xperience.Google.DataStudio
         };
 
 
+        public static FieldSet ruleFieldSet = new FieldSet
+        {
+            ObjectType = RuleInfo.OBJECT_TYPE,
+            Fields = new FieldDefinition[]
+            {
+                new FieldDefinition
+                {
+                    Name = nameof(RuleInfo.RuleID),
+                    DataType = FieldDataType.Integer
+                },
+                new FieldDefinition
+                {
+                    Name = nameof(RuleInfo.RuleScoreID),
+                    DataType = FieldDataType.Integer
+                },
+                new FieldDefinition
+                {
+                    Name = nameof(RuleInfo.RuleDisplayName),
+                    DataType = FieldDataType.Text
+                },
+                new FieldDefinition
+                {
+                    Name = nameof(RuleInfo.RuleValue),
+                    DataType = FieldDataType.Integer
+                },
+                new FieldDefinition
+                {
+                    Name = nameof(RuleInfo.RuleMaxPoints),
+                    DataType = FieldDataType.Integer
+                },
+                new FieldDefinition
+                {
+                    Name = nameof(RuleInfo.RuleValidUntil),
+                    DataType = FieldDataType.DateTime
+                },
+                new FieldDefinition
+                {
+                    Name = nameof(RuleInfo.RuleValidity),
+                    DataType = FieldDataType.Integer
+                },
+                new FieldDefinition
+                {
+                    Name = nameof(RuleInfo.RuleValidFor),
+                    DataType = FieldDataType.Integer
+                },
+                new FieldDefinition
+                {
+                    Name = nameof(RuleInfo.RuleIsRecurring),
+                    DataType = FieldDataType.Boolean
+                },
+                new FieldDefinition
+                {
+                    Name = nameof(RuleInfo.RuleType),
+                    DataType = FieldDataType.Integer
+                },
+                new FieldDefinition
+                {
+                    Name = nameof(RuleInfo.RuleParameter),
+                    DataType = FieldDataType.Text
+                },
+            }
+        };
+
+
+        public static FieldSet scoreContactRuleFieldSet = new FieldSet
+        {
+            ObjectType = ScoreContactRuleInfo.OBJECT_TYPE,
+            Fields = new FieldDefinition[]
+            {
+                new FieldDefinition
+                {
+                    Name = nameof(ScoreContactRuleInfo.ScoreID),
+                    DataType = FieldDataType.Integer
+                },
+                new FieldDefinition
+                {
+                    Name = nameof(ScoreContactRuleInfo.ContactID),
+                    DataType = FieldDataType.Integer
+                },
+                new FieldDefinition
+                {
+                    Name = nameof(ScoreContactRuleInfo.RuleID),
+                    DataType = FieldDataType.Integer
+                },
+                new FieldDefinition
+                {
+                    Name = nameof(ScoreContactRuleInfo.Value),
+                    DataType = FieldDataType.Integer
+                }
+            }
+        };
+
+
+        public static FieldSet scoreFieldSet = new FieldSet
+        {
+            ObjectType = ScoreInfo.OBJECT_TYPE,
+            Fields = new FieldDefinition[]
+            {
+                new FieldDefinition
+                {
+                    Name = nameof(ScoreInfo.ScoreID),
+                    DataType = FieldDataType.Integer
+                },
+                new FieldDefinition
+                {
+                    Name = nameof(ScoreInfo.ScoreDisplayName),
+                    DataType = FieldDataType.Text
+                },
+                new FieldDefinition
+                {
+                    Name = nameof(ScoreInfo.ScoreEnabled),
+                    DataType = FieldDataType.Boolean
+                },
+                new FieldDefinition
+                {
+                    Name = nameof(ScoreInfo.ScoreStatus),
+                    DataType = FieldDataType.Integer
+                }
+            }
+        };
+
+
         public static FieldSet siteFieldSet = new FieldSet
         {
             ObjectType = SiteInfo.OBJECT_TYPE,
