@@ -1,0 +1,19 @@
+{
+  "timeZone": "America/New_York",
+  "dependencies": {
+  },
+  "exceptionLogging": "STACKDRIVER",
+  "runtimeVersion": "V8",
+  "dataStudio": {
+    "name": "Kentico Xperience",
+    "company": "Kentico Xperience",
+    "companyUrl": "https://xperience.io",
+    "logoUrl": "https://raw.githubusercontent.com/Kentico/devnet.kentico.com/master/marketplace/assets/kentico-icon.png",
+    "addonUrl": "https://github.com/Kentico/xperience-google-datastudio",
+    "supportUrl": "https://github.com/Kentico/xperience-google-datastudio",
+    "description": "Displays reports from your Kentico Xperience website."
+  },
+  "oauthScopes": [
+    "https://www.googleapis.com/auth/script.external_request"
+  ]
+}
