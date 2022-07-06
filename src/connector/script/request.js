@@ -5,14 +5,10 @@
  * @throws Throws a Google App Script exception if the report can't be retrieved.
  */
 const getReport = (request) => {
-  const credentials = getCredentials();
-  const start = new Date(request.dateRange.startDate).toISOString();
-  const end = new Date(request.dateRange.endDate).toISOString();
-
   // Get the object types requested to reduce report size
   const objectTypes = getRequestedObjectTypes(request);
-
-  const url = `${credentials.path}/${REPORT_ENDPOINT}?start=${start}&end=${end}&objectTypes=${objectTypes.join(',')}`;
+  const credentials = getCredentials();
+  const url = `${credentials.path}/${REPORT_ENDPOINT}?start=${request.dateRange.startDate}&end=${request.dateRange.endDate}&objectTypes=${objectTypes.join(',')}`;
   const response = sendRequest(url, credentials.username, credentials.password);
 
   return JSON.parse(response.getContentText());

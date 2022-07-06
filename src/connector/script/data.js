@@ -36,11 +36,12 @@ const getFormattedData = (requestedFields, report) => {
 }
 
 const formatData = (requestedField, object) => {
-  const value = object[requestedField.getId()];
-  if (!value) {
+  const fieldName = requestedField.getId();
+  if (!Object.keys(object).includes(fieldName)) {
     return '';
   }
 
+  const value = object[fieldName];
   if (requestedField.getType() === FieldTypes.YEAR_MONTH_DAY_SECOND) {
     return getDataStudioDateTime(value);
   }

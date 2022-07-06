@@ -20,21 +20,23 @@ namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
         {
             return new FieldSet[]
             {
-                DataStudioConstants.activityFieldSet,
-                DataStudioConstants.automationStateFieldSet,
-                DataStudioConstants.consentAgreementFieldSet,
-                DataStudioConstants.consentFieldSet,
-                DataStudioConstants.contactFieldSet,
-                DataStudioConstants.contactGroupFieldSet,
-                DataStudioConstants.contactGroupMemberFieldSet,
-                DataStudioConstants.countryFieldSet,
-                DataStudioConstants.ruleFieldSet,
-                DataStudioConstants.scoreContactRuleFieldSet,
-                DataStudioConstants.scoreFieldSet,
-                DataStudioConstants.siteFieldSet,
-                DataStudioConstants.stateFieldSet,
-                DataStudioConstants.userFieldSet,
-                DataStudioConstants.workflowFieldSet
+                DataStudioDefaultFieldSets.activityFieldSet,
+                DataStudioDefaultFieldSets.automationStateFieldSet,
+                DataStudioDefaultFieldSets.consentAgreementFieldSet,
+                DataStudioDefaultFieldSets.consentFieldSet,
+                DataStudioDefaultFieldSets.contactFieldSet,
+                DataStudioDefaultFieldSets.contactGroupFieldSet,
+                DataStudioDefaultFieldSets.contactGroupMemberFieldSet,
+                DataStudioDefaultFieldSets.countryFieldSet,
+                DataStudioDefaultFieldSets.customerFieldSet,
+                DataStudioDefaultFieldSets.orderFieldSet,
+                DataStudioDefaultFieldSets.ruleFieldSet,
+                DataStudioDefaultFieldSets.scoreContactRuleFieldSet,
+                DataStudioDefaultFieldSets.scoreFieldSet,
+                DataStudioDefaultFieldSets.siteFieldSet,
+                DataStudioDefaultFieldSets.stateFieldSet,
+                DataStudioDefaultFieldSets.userFieldSet,
+                DataStudioDefaultFieldSets.workflowFieldSet
             };
         }
 

@@ -53,10 +53,11 @@ namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
         public string GenerateReport()
         {
             // Delete existing report
-            var reportPath = $"{SystemContext.WebApplicationPhysicalPath}\\{DataStudioConstants.REPORT_PATH}";
-            if (File.Exists(reportPath))
+            var reportPath = "\\App_Data\\CMSModules\\Kentico.Xperience.Google.DataStudio\\datastudio.json";
+            var fullPath = $"{SystemContext.WebApplicationPhysicalPath}\\{reportPath}";
+            if (File.Exists(fullPath))
             {
-                File.Delete(reportPath);
+                File.Delete(fullPath);
             }
 
             var allData = new List<JObject>();
@@ -74,7 +75,7 @@ namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
             };
 
             // Write JSON file to filesystem
-            using (StreamWriter file = File.CreateText(reportPath))
+            using (StreamWriter file = File.CreateText(fullPath))
             {
                 new JsonSerializer().Serialize(file, report);
             }

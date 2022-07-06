@@ -86,6 +86,7 @@ namespace Kentico.Xperience.Google.DataStudio.Controllers
 
             var startDate = DateTime.Parse(start);
             var endDate = DateTime.Parse(end);
+            endDate = endDate.AddHours(23).AddMinutes(59).AddSeconds(59).AddMilliseconds(999);
             var dateFilterFields = report.FieldSets
                 .Where(set => !String.IsNullOrEmpty(set.DateFilterField))
                 .Select(set => $"{set.ObjectType}.{set.DateFilterField}");
@@ -157,13 +158,14 @@ namespace Kentico.Xperience.Google.DataStudio.Controllers
 
         private DataStudioReport LoadReport()
         {
-            var reportPath = $"{SystemContext.WebApplicationPhysicalPath}\\{DataStudioConstants.REPORT_PATH}";
-            if (!File.Exists(reportPath))
+            var reportPath = "\\App_Data\\CMSModules\\Kentico.Xperience.Google.DataStudio\\datastudio.json";
+            var fullPath = $"{SystemContext.WebApplicationPhysicalPath}\\{reportPath}";
+            if (!File.Exists(fullPath))
             {
                 return null;
             }
 
-            using (StreamReader r = new StreamReader(reportPath))
+            using (StreamReader r = new StreamReader(fullPath))
             {
                 return JsonConvert.DeserializeObject<DataStudioReport>(r.ReadToEnd());
             }

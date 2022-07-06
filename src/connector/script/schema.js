@@ -34,29 +34,28 @@ const getFields = () => {
 }
 
 /**
- * Converts the provided Xperience data type to the corresponding Data Studio type.
+ * Converts the provided data type string to the corresponding Data Studio type.
  * 
- * @param {String} xperienceDataType An Xperience data type.
+ * @param {String} dataType An data type string representation.
  * @returns {Object} A Data Studio {@link https://developers.google.com/apps-script/reference/data-studio/field-type FieldType}.
  */
-const getDataType = (xperienceDataType) => {
-  switch (xperienceDataType) {
-  case 'boolean':
+const getDataType = (dataType) => {
+  switch (dataType) {
+  case 'BOOLEAN':
     return FieldTypes.BOOLEAN;
-  case 'integer':
-  case 'double':
-  case 'longinteger':
-  case 'decimal':
+  case 'COUNTRY':
+    return FieldTypes.COUNTRY;
+  case 'COUNTRY_CODE':
+    return FieldTypes.COUNTRY_CODE;
+  case 'CITY':
+    return FieldTypes.CITY;
+  case 'NUMBER':
     return FieldTypes.NUMBER;
-  case 'date':
-  case 'datetime':
+  case 'YEAR_MONTH_DAY_SECOND':
     return FieldTypes.YEAR_MONTH_DAY_SECOND;
-  case 'text':
-  case 'longtext':
-  case 'file':
-  case 'guid':
-  case 'binary':
-  case 'xml':
+  case 'URL':
+    return FieldTypes.URL;
+  case 'TEXT':
   default:
     return FieldTypes.TEXT;
   }
