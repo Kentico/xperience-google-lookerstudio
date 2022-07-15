@@ -1,4 +1,6 @@
-﻿namespace Kentico.Xperience.Google.DataStudio.Models
+﻿using Newtonsoft.Json;
+
+namespace Kentico.Xperience.Google.DataStudio.Models
 {
     public class FieldDefinition
     {
@@ -15,7 +17,8 @@
         }
 
 
-        public bool IsMetric
+        [JsonIgnore]
+        public bool Anonymize
         {
             get;
             set;

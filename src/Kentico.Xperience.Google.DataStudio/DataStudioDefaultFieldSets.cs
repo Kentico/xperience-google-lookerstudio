@@ -22,7 +22,8 @@ namespace Kentico.Xperience.Google.DataStudio
                 new FieldDefinition
                 {
                     Name = nameof(ActivityInfo.ActivityID),
-                    DataType = DataStudioFieldType.NUMBER
+                    DataType = DataStudioFieldType.TEXT,
+                    Anonymize = true
                 },
                 new FieldDefinition
                 {
@@ -52,8 +53,8 @@ namespace Kentico.Xperience.Google.DataStudio
                 new FieldDefinition
                 {
                     Name = nameof(ActivityInfo.ActivityContactID),
-                    DataType = DataStudioFieldType.NUMBER,
-                    IsMetric = true
+                    DataType = DataStudioFieldType.TEXT,
+                    Anonymize = true
                 },
                 new FieldDefinition
                 {
@@ -81,15 +82,18 @@ namespace Kentico.Xperience.Google.DataStudio
                 },
                 new FieldDefinition {
                     Name = nameof(AutomationStateInfo.StateID),
-                    DataType = DataStudioFieldType.NUMBER
+                    DataType = DataStudioFieldType.TEXT,
+                    Anonymize = true
                 },
                 new FieldDefinition {
                     Name = nameof(AutomationStateInfo.StateStepID),
-                    DataType = DataStudioFieldType.NUMBER
+                    DataType = DataStudioFieldType.TEXT,
+                    Anonymize = true
                 },
                 new FieldDefinition {
                     Name = nameof(AutomationStateInfo.StateObjectID),
-                    DataType = DataStudioFieldType.NUMBER
+                    DataType = DataStudioFieldType.TEXT,
+                    Anonymize = true
                 },
                 new FieldDefinition {
                     Name = nameof(AutomationStateInfo.StateObjectType),
@@ -97,7 +101,8 @@ namespace Kentico.Xperience.Google.DataStudio
                 },
                 new FieldDefinition {
                     Name = nameof(AutomationStateInfo.StateWorkflowID),
-                    DataType = DataStudioFieldType.NUMBER
+                    DataType = DataStudioFieldType.TEXT,
+                    Anonymize = true
                 },
                 new FieldDefinition {
                     Name = nameof(AutomationStateInfo.StateStatus),
@@ -105,7 +110,8 @@ namespace Kentico.Xperience.Google.DataStudio
                 },
                 new FieldDefinition {
                     Name = nameof(AutomationStateInfo.StateSiteID),
-                    DataType = DataStudioFieldType.NUMBER
+                    DataType = DataStudioFieldType.TEXT,
+                    Anonymize = true
                 }
             }
         };
@@ -127,11 +133,13 @@ namespace Kentico.Xperience.Google.DataStudio
                 },
                 new FieldDefinition {
                     Name = nameof(ConsentAgreementInfo.ConsentAgreementContactID),
-                    DataType = DataStudioFieldType.NUMBER
+                    DataType = DataStudioFieldType.TEXT,
+                    Anonymize = true
                 },
                 new FieldDefinition {
                     Name = nameof(ConsentAgreementInfo.ConsentAgreementConsentID),
-                    DataType = DataStudioFieldType.NUMBER
+                    DataType = DataStudioFieldType.TEXT,
+                    Anonymize = true
                 }
             }
         };
@@ -144,7 +152,8 @@ namespace Kentico.Xperience.Google.DataStudio
             {
                 new FieldDefinition {
                     Name = nameof(ConsentInfo.ConsentID),
-                    DataType = DataStudioFieldType.NUMBER,
+                    DataType = DataStudioFieldType.TEXT,
+                    Anonymize = true
                 },
                 new FieldDefinition {
                     Name = nameof(ConsentInfo.ConsentLastModified),
@@ -166,8 +175,8 @@ namespace Kentico.Xperience.Google.DataStudio
             {
                 new FieldDefinition {
                     Name = nameof(ContactInfo.ContactID),
-                    DataType = DataStudioFieldType.NUMBER,
-                    IsMetric = true
+                    DataType = DataStudioFieldType.TEXT,
+                    Anonymize = true
                 },
                 new FieldDefinition {
                     Name = nameof(ContactInfo.ContactFirstName),
@@ -203,11 +212,13 @@ namespace Kentico.Xperience.Google.DataStudio
                 },
                 new FieldDefinition {
                     Name = nameof(ContactInfo.ContactCountryID),
-                    DataType = DataStudioFieldType.NUMBER
+                    DataType = DataStudioFieldType.TEXT,
+                    Anonymize = true
                 },
                 new FieldDefinition {
                     Name = nameof(ContactInfo.ContactStateID),
-                    DataType = DataStudioFieldType.NUMBER
+                    DataType = DataStudioFieldType.TEXT,
+                    Anonymize = true
                 },
                 new FieldDefinition {
                     Name = nameof(ContactInfo.ContactEmail),
@@ -237,7 +248,8 @@ namespace Kentico.Xperience.Google.DataStudio
                 },
                 new FieldDefinition {
                     Name = nameof(ContactGroupInfo.ContactGroupID),
-                    DataType = DataStudioFieldType.NUMBER
+                    DataType = DataStudioFieldType.TEXT,
+                    Anonymize = true
                 }
             }
         };
@@ -251,12 +263,14 @@ namespace Kentico.Xperience.Google.DataStudio
                 new FieldDefinition
                 {
                     Name = nameof(ContactGroupMemberInfo.ContactGroupMemberContactGroupID),
-                    DataType = DataStudioFieldType.NUMBER
+                    DataType = DataStudioFieldType.TEXT,
+                    Anonymize = true
                 },
                 new FieldDefinition
                 {
                     Name = nameof(ContactGroupMemberInfo.ContactGroupMemberRelatedID),
-                    DataType = DataStudioFieldType.NUMBER
+                    DataType = DataStudioFieldType.TEXT,
+                    Anonymize = true
                 }
             }
         };
@@ -270,7 +284,8 @@ namespace Kentico.Xperience.Google.DataStudio
                 new FieldDefinition
                 {
                     Name = nameof(CountryInfo.CountryID),
-                    DataType = DataStudioFieldType.NUMBER
+                    DataType = DataStudioFieldType.TEXT,
+                    Anonymize = true
                 },
                 new FieldDefinition
                 {
@@ -295,7 +310,8 @@ namespace Kentico.Xperience.Google.DataStudio
                 new FieldDefinition
                 {
                     Name = nameof(CustomerInfo.CustomerID),
-                    DataType = DataStudioFieldType.NUMBER
+                    DataType = DataStudioFieldType.TEXT,
+                    Anonymize = true
                 },
                 new FieldDefinition
                 {
@@ -320,12 +336,14 @@ namespace Kentico.Xperience.Google.DataStudio
                 new FieldDefinition
                 {
                     Name = nameof(CustomerInfo.CustomerUserID),
-                    DataType = DataStudioFieldType.NUMBER
+                    DataType = DataStudioFieldType.TEXT,
+                    Anonymize = true
                 },
                 new FieldDefinition
                 {
                     Name = nameof(CustomerInfo.CustomerSiteID),
-                    DataType = DataStudioFieldType.NUMBER
+                    DataType = DataStudioFieldType.TEXT,
+                    Anonymize = true
                 },
                 new FieldDefinition
                 {
@@ -345,7 +363,8 @@ namespace Kentico.Xperience.Google.DataStudio
                 new FieldDefinition
                 {
                     Name = nameof(OrderInfo.OrderID),
-                    DataType = DataStudioFieldType.NUMBER
+                    DataType = DataStudioFieldType.TEXT,
+                    Anonymize = true
                 },
                 new FieldDefinition
                 {
@@ -355,12 +374,14 @@ namespace Kentico.Xperience.Google.DataStudio
                 new FieldDefinition
                 {
                     Name = nameof(OrderInfo.OrderCustomerID),
-                    DataType = DataStudioFieldType.NUMBER
+                    DataType = DataStudioFieldType.TEXT,
+                    Anonymize = true
                 },
                 new FieldDefinition
                 {
                     Name = nameof(OrderInfo.OrderSiteID),
-                    DataType = DataStudioFieldType.NUMBER
+                    DataType = DataStudioFieldType.TEXT,
+                    Anonymize = true
                 },
                 new FieldDefinition
                 {
@@ -394,12 +415,14 @@ namespace Kentico.Xperience.Google.DataStudio
                 new FieldDefinition
                 {
                     Name = nameof(RuleInfo.RuleID),
-                    DataType = DataStudioFieldType.NUMBER
+                    DataType = DataStudioFieldType.TEXT,
+                    Anonymize = true
                 },
                 new FieldDefinition
                 {
                     Name = nameof(RuleInfo.RuleScoreID),
-                    DataType = DataStudioFieldType.NUMBER
+                    DataType = DataStudioFieldType.TEXT,
+                    Anonymize = true
                 },
                 new FieldDefinition
                 {
@@ -458,17 +481,20 @@ namespace Kentico.Xperience.Google.DataStudio
                 new FieldDefinition
                 {
                     Name = nameof(ScoreContactRuleInfo.ScoreID),
-                    DataType = DataStudioFieldType.NUMBER
+                    DataType = DataStudioFieldType.TEXT,
+                    Anonymize = true
                 },
                 new FieldDefinition
                 {
                     Name = nameof(ScoreContactRuleInfo.ContactID),
-                    DataType = DataStudioFieldType.NUMBER
+                    DataType = DataStudioFieldType.TEXT,
+                    Anonymize = true
                 },
                 new FieldDefinition
                 {
                     Name = nameof(ScoreContactRuleInfo.RuleID),
-                    DataType = DataStudioFieldType.NUMBER
+                    DataType = DataStudioFieldType.TEXT,
+                    Anonymize = true
                 },
                 new FieldDefinition
                 {
@@ -487,7 +513,8 @@ namespace Kentico.Xperience.Google.DataStudio
                 new FieldDefinition
                 {
                     Name = nameof(ScoreInfo.ScoreID),
-                    DataType = DataStudioFieldType.NUMBER
+                    DataType = DataStudioFieldType.TEXT,
+                    Anonymize = true
                 },
                 new FieldDefinition
                 {
@@ -516,7 +543,8 @@ namespace Kentico.Xperience.Google.DataStudio
                 new FieldDefinition
                 {
                     Name = nameof(SiteInfo.SiteID),
-                    DataType = DataStudioFieldType.NUMBER
+                    DataType = DataStudioFieldType.TEXT,
+                    Anonymize = true
                 },
                 new FieldDefinition
                 {
@@ -535,7 +563,8 @@ namespace Kentico.Xperience.Google.DataStudio
                 new FieldDefinition
                 {
                     Name = nameof(StateInfo.StateID),
-                    DataType = DataStudioFieldType.NUMBER
+                    DataType = DataStudioFieldType.TEXT,
+                    Anonymize = true
                 },
                 new FieldDefinition
                 {
@@ -555,7 +584,8 @@ namespace Kentico.Xperience.Google.DataStudio
                 new FieldDefinition
                 {
                     Name = nameof(UserInfo.UserID),
-                    DataType = DataStudioFieldType.NUMBER
+                    DataType = DataStudioFieldType.TEXT,
+                    Anonymize = true
                 },
                 new FieldDefinition
                 {
@@ -589,7 +619,8 @@ namespace Kentico.Xperience.Google.DataStudio
                 new FieldDefinition
                 {
                     Name = nameof(WorkflowInfo.WorkflowID),
-                    DataType = DataStudioFieldType.NUMBER
+                    DataType = DataStudioFieldType.TEXT,
+                    Anonymize = true
                 },
                 new FieldDefinition
                 {

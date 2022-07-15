@@ -2,6 +2,7 @@
 using CMS.Base;
 using CMS.Core;
 using CMS.DataEngine;
+using CMS.Helpers;
 
 using Kentico.Xperience.Google.DataStudio.Models;
 using Kentico.Xperience.Google.DataStudio.Services;
@@ -22,19 +23,19 @@ namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
     internal class DefaultDataStudioReportGenerator : IDataStudioReportGenerator
     {
         private readonly IReportSchemaProvider reportSchemaProvider;
-        private readonly IEnumerable<FieldSet> mFieldSets;
+        private readonly IEnumerable<FieldSet> fieldSets;
 
 
         public DefaultDataStudioReportGenerator(IReportSchemaProvider reportSchemaProvider)
         {
             this.reportSchemaProvider = reportSchemaProvider;
-            mFieldSets = reportSchemaProvider.GetFieldSets();
+            fieldSets = reportSchemaProvider.GetFieldSets();
         }
 
 
         public IEnumerable<JObject> GetData(string objectType)
         {
-            var fieldSet = mFieldSets.FirstOrDefault(f => f.ObjectType == objectType);
+            var fieldSet = fieldSets.FirstOrDefault(f => f.ObjectType == objectType);
             if (fieldSet == null)
             {
                 return Enumerable.Empty<JObject>();
@@ -52,35 +53,64 @@ namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
 
         public string GenerateReport()
         {
-            // Delete existing report
-            var reportPath = "\\App_Data\\CMSModules\\Kentico.Xperience.Google.DataStudio\\datastudio.json";
-            var fullPath = $"{SystemContext.WebApplicationPhysicalPath}\\{reportPath}";
-            if (File.Exists(fullPath))
+            // Ensure folder exists
+            var directory = $"{SystemContext.WebApplicationPhysicalPath}\\App_Data\\CMSModules\\Kentico.Xperience.Google.DataStudio";
+            if (!Directory.Exists(directory))
             {
-                File.Delete(fullPath);
+                Directory.CreateDirectory(directory);
             }
 
+            // Add anonymous objects to list
             var allData = new List<JObject>();
-            var objectTypes = mFieldSets.Select(set => set.ObjectType);
-            foreach (var objectType in objectTypes)
+            foreach (var fieldSet in fieldSets)
             {
-                // Add data from object type
-                allData.AddRange(GetData(objectType.ToLower()));
+                var objectTypeData = GetData(fieldSet.ObjectType.ToLower());
+                AnonymizeData(fieldSet, objectTypeData);
+
+                allData.AddRange(objectTypeData);
             }
 
             var report = new DataStudioReport
             {
-                FieldSets = mFieldSets,
+                FieldSets = fieldSets,
                 Data = allData
             };
 
             // Write JSON file to filesystem
-            using (StreamWriter file = File.CreateText(fullPath))
+            using (StreamWriter file = File.CreateText($"{directory}\\datastudio.json"))
             {
                 new JsonSerializer().Serialize(file, report);
             }
 
             return String.Empty;
+        }
+
+
+        private void AnonymizeData(FieldSet fieldSet, IEnumerable<JObject> data)
+        {
+            var fieldsToAnonymize = fieldSet.Fields.Where(f => f.Anonymize);
+            var hashSettings = new HashSettings(nameof(DefaultDataStudioReportGenerator))
+            {
+                HashStringSaltOverride = Guid.NewGuid().ToString()
+
+            };
+            foreach (var field in fieldsToAnonymize)
+            {
+                // Data type for anonymized field must be text
+                field.DataType = DataStudioFieldType.TEXT;
+                foreach (var obj in data)
+                {
+                    var propToAnonymize = obj.Property($"{fieldSet.ObjectType.ToLower()}.{field.Name}");
+                    if (propToAnonymize == null)
+                    {
+                        continue;
+                    }
+
+                    var existingValue = propToAnonymize.Value.Value<string>();
+                    var anonValue = ValidationHelper.GetHashString(existingValue, hashSettings);
+                    propToAnonymize.Value = anonValue;
+                }
+            }
         }
     }
 }
