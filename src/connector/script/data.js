@@ -35,6 +35,13 @@ const getFormattedData = (requestedFields, data) => {
   return rows;
 }
 
+/**
+ * Retrieves a single field's value in Google Data Studio the desired format.
+ * 
+ * @param {Object} requestedField The {@link https://developers.google.com/apps-script/reference/data-studio/field Field} to retrieve the value of.
+ * @param {Object} object The report object to retrieve data from. 
+ * @returns {Object} The value of the field.
+ */
 const formatData = (requestedField, object) => {
   const fieldName = requestedField.getId();
   if (!Object.keys(object).includes(fieldName)) {

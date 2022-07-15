@@ -20,15 +20,15 @@ using System.Web.Http;
 namespace Kentico.Xperience.Google.DataStudio.Controllers
 {
     /// <summary>
-    /// A .NET Web API controller which receives requests for data from the Google Data Studio connector.
+    /// A .NET Web API controller which receives requests for the report from the Google Data Studio connector.
     /// </summary>
     public class DataStudioController : ApiController
     {
         /// <summary>
-        /// Reads the phyiscal report JSON file and returns the requested data based on query string parameters
+        /// Reads the phyiscal report file and returns the requested data based on query string parameters
         /// for date filtering and object type(s).
         /// </summary>
-        /// <returns></returns>
+        /// <returns>The JSON representation of <see cref="DataStudioReport.Data"/>.</returns>
         [HttpGet]
         public HttpResponseMessage GetReportData()
         {
@@ -51,6 +51,11 @@ namespace Kentico.Xperience.Google.DataStudio.Controllers
         }
 
 
+        /// <summary>
+        /// Reads the phyiscal report file and returns the fields that should be allowed for selection in
+        /// Google Data Studio.
+        /// </summary>
+        /// <returns>The JSON representation of <see cref="DataStudioReport.FieldSets"/>.</returns>
         [HttpGet]
         public HttpResponseMessage GetReportFields()
         {
@@ -70,6 +75,11 @@ namespace Kentico.Xperience.Google.DataStudio.Controllers
         }
 
 
+        /// <summary>
+        /// Validates the Basic authentication header to ensure the Google Data Studio connector's authorization
+        /// configuration is valid.
+        /// </summary>
+        /// <returns>A 200 response if the credentials are valid, otherwise 401.</returns>
         [HttpGet]
         public HttpResponseMessage ValidateCredentials()
         {
@@ -83,6 +93,11 @@ namespace Kentico.Xperience.Google.DataStudio.Controllers
         }
 
 
+        /// <summary>
+        /// Uses query string parameters "start" and "end" to determine which objects of <see cref="DataStudioReport.Data"/> should
+        /// be returned, and removes all other objects from the report.
+        /// </summary>
+        /// <param name="report">The report to filter the data of.</param>
         private void ApplyDateFilter(DataStudioReport report)
         {
             var start = QueryHelper.GetString("start", String.Empty);
@@ -112,6 +127,11 @@ namespace Kentico.Xperience.Google.DataStudio.Controllers
         }
 
 
+        /// <summary>
+        /// Uses the query string parameter "objectTypes" to determine which objects of <see cref="DataStudioReport.Data"/> should
+        /// be returned, and removes all other objects which are not of the requested types.
+        /// </summary>
+        /// <param name="report">The report to filter the data of.</param>
         private void ApplyObjectTypeFilter(DataStudioReport report)
         {
             var objectTypes = QueryHelper.GetString("objectTypes", String.Empty);
@@ -130,6 +150,10 @@ namespace Kentico.Xperience.Google.DataStudio.Controllers
         }
 
 
+        /// <summary>
+        /// Validates the Basic authentication header and returns the matching Xperience user.
+        /// </summary>
+        /// <returns>An Xperience user, or null if the header is not valid.</returns>
         private UserInfo BasicAuthenticate()
         {
             string username;

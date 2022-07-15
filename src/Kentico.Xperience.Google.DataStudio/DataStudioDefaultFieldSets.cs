@@ -9,11 +9,19 @@ using CMS.SiteProvider;
 using CMS.WorkflowEngine;
 
 using Kentico.Xperience.Google.DataStudio.Models;
+using Kentico.Xperience.Google.DataStudio.Services;
 
 namespace Kentico.Xperience.Google.DataStudio
 {
+    /// <summary>
+    /// Contains pre-defined <see cref="FieldSet"/>s which may be referenced in an implementation
+    /// of <see cref="IReportSchemaProvider"/> to determine the fields of the report.
+    /// </summary>
     public class DataStudioDefaultFieldSets
     {
+        /// <summary>
+        /// The default activity <see cref="FieldSet"/>.
+        /// </summary>
         public static FieldSet activityFieldSet = new FieldSet
         {
             ObjectType = ActivityInfo.OBJECT_TYPE,
@@ -70,6 +78,9 @@ namespace Kentico.Xperience.Google.DataStudio
         };
 
 
+        /// <summary>
+        /// The default marketing automation state <see cref="FieldSet"/>.
+        /// </summary>
         public static FieldSet automationStateFieldSet = new FieldSet
         {
             ObjectType = "cms.automationstate",
@@ -117,6 +128,9 @@ namespace Kentico.Xperience.Google.DataStudio
         };
 
 
+        /// <summary>
+        /// The default data protection consent agreement <see cref="FieldSet"/>.
+        /// </summary>
         public static FieldSet consentAgreementFieldSet = new FieldSet
         {
             ObjectType = ConsentAgreementInfo.OBJECT_TYPE,
@@ -145,6 +159,9 @@ namespace Kentico.Xperience.Google.DataStudio
         };
 
 
+        /// <summary>
+        /// The default data protection consent <see cref="FieldSet"/>.
+        /// </summary>
         public static FieldSet consentFieldSet = new FieldSet
         {
             ObjectType = ConsentInfo.OBJECT_TYPE,
@@ -167,6 +184,9 @@ namespace Kentico.Xperience.Google.DataStudio
         };
 
 
+        /// <summary>
+        /// The default contact <see cref="FieldSet"/>.
+        /// </summary>
         public static FieldSet contactFieldSet = new FieldSet
         {
             ObjectType = ContactInfo.OBJECT_TYPE,
@@ -232,6 +252,9 @@ namespace Kentico.Xperience.Google.DataStudio
         };
 
 
+        /// <summary>
+        /// The default contact group <see cref="FieldSet"/>.
+        /// </summary>
         public static FieldSet contactGroupFieldSet = new FieldSet
         {
             ObjectType = ContactGroupInfo.OBJECT_TYPE,
@@ -255,6 +278,9 @@ namespace Kentico.Xperience.Google.DataStudio
         };
 
 
+        /// <summary>
+        /// The default contact group member <see cref="FieldSet"/>.
+        /// </summary>
         public static FieldSet contactGroupMemberFieldSet = new FieldSet
         {
             ObjectType = "om.contactgroupmember",
@@ -276,6 +302,9 @@ namespace Kentico.Xperience.Google.DataStudio
         };
 
 
+        /// <summary>
+        /// The default globalization country <see cref="FieldSet"/>.
+        /// </summary>
         public static FieldSet countryFieldSet = new FieldSet
         {
             ObjectType = CountryInfo.OBJECT_TYPE,
@@ -301,6 +330,9 @@ namespace Kentico.Xperience.Google.DataStudio
         };
 
 
+        /// <summary>
+        /// The default e-commerce customer <see cref="FieldSet"/>.
+        /// </summary>
         public static FieldSet customerFieldSet = new FieldSet
         {
             ObjectType = CustomerInfo.OBJECT_TYPE,
@@ -354,6 +386,9 @@ namespace Kentico.Xperience.Google.DataStudio
         };
 
 
+        /// <summary>
+        /// The default e-commerce order <see cref="FieldSet"/>.
+        /// </summary>
         public static FieldSet orderFieldSet = new FieldSet
         {
             ObjectType = OrderInfo.OBJECT_TYPE,
@@ -407,6 +442,9 @@ namespace Kentico.Xperience.Google.DataStudio
         };
 
 
+        /// <summary>
+        /// The default contact scoring rule <see cref="FieldSet"/>.
+        /// </summary>
         public static FieldSet ruleFieldSet = new FieldSet
         {
             ObjectType = RuleInfo.OBJECT_TYPE,
@@ -473,6 +511,9 @@ namespace Kentico.Xperience.Google.DataStudio
         };
 
 
+        /// <summary>
+        /// The default contact scoring contact rule <see cref="FieldSet"/>.
+        /// </summary>
         public static FieldSet scoreContactRuleFieldSet = new FieldSet
         {
             ObjectType = ScoreContactRuleInfo.OBJECT_TYPE,
@@ -505,6 +546,9 @@ namespace Kentico.Xperience.Google.DataStudio
         };
 
 
+        /// <summary>
+        /// The default contact scoring score <see cref="FieldSet"/>.
+        /// </summary>
         public static FieldSet scoreFieldSet = new FieldSet
         {
             ObjectType = ScoreInfo.OBJECT_TYPE,
@@ -535,6 +579,9 @@ namespace Kentico.Xperience.Google.DataStudio
         };
 
 
+        /// <summary>
+        /// The default site <see cref="FieldSet"/>.
+        /// </summary>
         public static FieldSet siteFieldSet = new FieldSet
         {
             ObjectType = SiteInfo.OBJECT_TYPE,
@@ -555,6 +602,9 @@ namespace Kentico.Xperience.Google.DataStudio
         };
 
 
+        /// <summary>
+        /// The default globalization state <see cref="FieldSet"/>.
+        /// </summary>
         public static FieldSet stateFieldSet = new FieldSet
         {
             ObjectType = StateInfo.OBJECT_TYPE,
@@ -575,6 +625,9 @@ namespace Kentico.Xperience.Google.DataStudio
         };
 
 
+        /// <summary>
+        /// The default user <see cref="FieldSet"/>.
+        /// </summary>
         public static FieldSet userFieldSet = new FieldSet
         {
             ObjectType = UserInfo.OBJECT_TYPE,
@@ -611,6 +664,9 @@ namespace Kentico.Xperience.Google.DataStudio
         };
 
 
+        /// <summary>
+        /// The default workflow <see cref="FieldSet"/>.
+        /// </summary>
         public static FieldSet workflowFieldSet = new FieldSet
         {
             ObjectType = WorkflowInfo.OBJECT_TYPE,

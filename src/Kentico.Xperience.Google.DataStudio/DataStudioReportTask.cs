@@ -7,13 +7,17 @@ using System;
 
 namespace Kentico.Xperience.Google.DataStudio
 {
+    /// <summary>
+    /// An Xperience scheduled task which generates the physical report file.
+    /// </summary>
     public class DataStudioReportTask : ITask
     {
         public string Execute(TaskInfo task)
         {
             try
             {
-                return Service.Resolve<IDataStudioReportGenerator>().GenerateReport();
+                Service.Resolve<IDataStudioReportGenerator>().GenerateReport();
+                return String.Empty;
             }
             catch(Exception ex)
             {

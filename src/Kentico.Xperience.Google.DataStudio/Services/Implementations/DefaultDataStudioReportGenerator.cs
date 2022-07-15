@@ -20,12 +20,18 @@ using System.Linq;
 [assembly: RegisterImplementation(typeof(IDataStudioReportGenerator), typeof(DefaultDataStudioReportGenerator), Lifestyle = Lifestyle.Singleton, Priority = RegistrationPriority.SystemDefault)]
 namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
 {
+    /// <summary>
+    /// Default implementation of <see cref="IDataStudioReportGenerator"/>.
+    /// </summary>
     internal class DefaultDataStudioReportGenerator : IDataStudioReportGenerator
     {
         private readonly IReportSchemaProvider reportSchemaProvider;
         private readonly IEnumerable<FieldSet> fieldSets;
 
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DefaultDataStudioReportGenerator"/> class.
+        /// </summary>
         public DefaultDataStudioReportGenerator(IReportSchemaProvider reportSchemaProvider)
         {
             this.reportSchemaProvider = reportSchemaProvider;
@@ -51,7 +57,7 @@ namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
         }
 
 
-        public string GenerateReport()
+        public void GenerateReport()
         {
             // Ensure folder exists
             var directory = $"{SystemContext.WebApplicationPhysicalPath}\\App_Data\\CMSModules\\Kentico.Xperience.Google.DataStudio";
@@ -81,11 +87,15 @@ namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
             {
                 new JsonSerializer().Serialize(file, report);
             }
-
-            return String.Empty;
         }
 
 
+        /// <summary>
+        /// Converts the value of any field where <see cref="FieldDefinition.Anonymize"/> is true into
+        /// a hashed value.
+        /// </summary>
+        /// <param name="fieldSet">The current <see cref="FieldSet"/> whose data is being hashed.</param>
+        /// <param name="data">The anonymous objects to apply hashing to.</param>
         private void AnonymizeData(FieldSet fieldSet, IEnumerable<JObject> data)
         {
             var fieldsToAnonymize = fieldSet.Fields.Where(f => f.Anonymize);

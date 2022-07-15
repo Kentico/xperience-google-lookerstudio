@@ -14,6 +14,9 @@ using System.Data;
 [assembly: RegisterImplementation(typeof(IReportSchemaProvider), typeof(DefaultReportSchemaProvider), Lifestyle = Lifestyle.Singleton, Priority = RegistrationPriority.SystemDefault)]
 namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
 {
+    /// <summary>
+    /// Default implementation of <see cref="IReportSchemaProvider"/>.
+    /// </summary>
     internal class DefaultReportSchemaProvider : IReportSchemaProvider
     {
         public IEnumerable<FieldSet> GetFieldSets()

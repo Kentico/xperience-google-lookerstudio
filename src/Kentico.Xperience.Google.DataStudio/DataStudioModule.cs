@@ -2,6 +2,7 @@
 using CMS.DataEngine;
 
 using Kentico.Xperience.Google.DataStudio;
+using Kentico.Xperience.Google.DataStudio.Controllers;
 
 using System.Net.Http.Headers;
 using System.Web.Http;
@@ -9,8 +10,14 @@ using System.Web.Http;
 [assembly: RegisterModule(typeof(DataStudioModule))]
 namespace Kentico.Xperience.Google.DataStudio
 {
+    /// <summary>
+    /// Registers routes for the <see cref="DataStudioController"/>.
+    /// </summary>
     public class DataStudioModule : Module
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DataStudioModule"/> class.
+        /// </summary>
         public DataStudioModule() : base(nameof(DataStudioModule))
         {
         }

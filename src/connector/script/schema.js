@@ -26,7 +26,7 @@ const getFields = () => {
 }
 
 /**
- * Converts the provided data type string to the corresponding Data Studio type.
+ * Converts the provided data type string to the corresponding Data Studio enum.
  * 
  * @param {String} dataType An data type string representation.
  * @returns {Object} A Data Studio {@link https://developers.google.com/apps-script/reference/data-studio/field-type FieldType}.
