@@ -3,7 +3,6 @@ const connector = DataStudioApp.createCommunityConnector();
 // Google Data Studio enums
 const FieldTypes = connector.FieldType;
 const AuthTypes = connector.AuthType;
-const AggregationType = connector.AggregationType;
 
 // Xperience endpoints
 const DATA_ENDPOINT = 'xperience-google-datastudio/getreportdata';
@@ -11,7 +10,6 @@ const VALIDATION_ENDPOINT = 'xperience-google-datastudio/validatecredentials';
 const FIELDS_ENDPOINT = 'xperience-google-datastudio/getreportfields';
 
 // General constants
-const PARAM_SITE = 'site';
 const PROPERTY_USERNAME = 'dscc.xperience.user';
 const PROPERTY_PASSWORD = 'dscc.xperience.pass';
 const PROPERTY_USERPATH = 'dscc.xperience.path';
