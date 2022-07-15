@@ -19,10 +19,18 @@ using System.Web.Http;
 
 namespace Kentico.Xperience.Google.DataStudio.Controllers
 {
+    /// <summary>
+    /// A .NET Web API controller which receives requests for data from the Google Data Studio connector.
+    /// </summary>
     public class DataStudioController : ApiController
     {
+        /// <summary>
+        /// Reads the phyiscal report JSON file and returns the requested data based on query string parameters
+        /// for date filtering and object type(s).
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-        public HttpResponseMessage GetReport()
+        public HttpResponseMessage GetReportData()
         {
             var user = BasicAuthenticate();
             if (user == null)
@@ -39,7 +47,7 @@ namespace Kentico.Xperience.Google.DataStudio.Controllers
             ApplyObjectTypeFilter(report);
             ApplyDateFilter(report);
 
-            return Request.CreateResponse(HttpStatusCode.OK, report);
+            return Request.CreateResponse(HttpStatusCode.OK, report.Data);
         }
 
 

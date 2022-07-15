@@ -6,14 +6,14 @@
  * @returns {Object} A {@link https://developers.google.com/apps-script/reference/data-studio/get-data-response GetDataResponse}.
  */
 const getData = (request) => {
-  const report = getReport(request);
+  const data = getReportData(request);
   const requestedFields = getFields().forIds(
     request.fields.map(field => field.name)
   );
 
   return connector.newGetDataResponse()
     .setFields(requestedFields)
-    .addAllRows(getFormattedData(requestedFields, report))
+    .addAllRows(getFormattedData(requestedFields, data))
     .build();
 }
    
@@ -21,13 +21,13 @@ const getData = (request) => {
  * Formats Xperience objects from the report into arrays of values.
  *
  * @param {Object} requestedFields The {@link https://developers.google.com/apps-script/reference/data-studio/field Fields} requested in the `getData` request.
+ * @param {Object[]} data An array of anonymous objects from the report.
  * @returns {Array[]} An array containing rows of data.
  */
-const getFormattedData = (requestedFields, report) => {
+const getFormattedData = (requestedFields, data) => {
   let rows = [];
   const fields = requestedFields.asArray();
-  const objects = report[KEY_DATA_PROPERTY];
-  for (const object of objects) {
+  for (const object of data) {
     const formattedData = fields.map(requestedField => formatData(requestedField, object));
     rows.push(formattedData);
   }

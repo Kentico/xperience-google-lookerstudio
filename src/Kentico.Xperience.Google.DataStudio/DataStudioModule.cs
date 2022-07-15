@@ -22,8 +22,8 @@ namespace Kentico.Xperience.Google.DataStudio
 
             GlobalConfiguration.Configuration.Routes.MapHttpRoute(
                 "GetReport",
-                "xperience-google-datastudio/getreport",
-                defaults: new { controller = "DataStudio", action = "GetReport" }
+                "xperience-google-datastudio/getreportdata",
+                defaults: new { controller = "DataStudio", action = "GetReportData" }
             );
             GlobalConfiguration.Configuration.Routes.MapHttpRoute(
                 "ValidateCredentials",
