@@ -12,18 +12,10 @@ const getFields = () => {
     const fieldDefinitons = fieldSet[KEY_FIELDSETS_FIELDS_PROPERTY];
     // Loop through each FieldDefinition
     for (const fieldDefiniton of fieldDefinitons) {
-      const isMetric = fieldDefiniton[KEY_FIELDDEFINITIONS_ISMETRIC];
       const dataType = getDataType(fieldDefiniton[KEY_FIELDDEFINITIONS_TYPE]);
       const fieldName = fieldDefiniton[KEY_FIELDDEFINITIONS_NAME];
 
-      let field;
-      if (isMetric) {
-        field = fields.newMetric().setAggregation(AggregationType.COUNT);
-      }
-      else {
-        field = fields.newDimension();
-      }
-      field
+      fields.newDimension()
         .setId(`${objectType}.${fieldName}`)
         .setName(fieldName)
         .setType(dataType);

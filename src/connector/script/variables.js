@@ -30,4 +30,3 @@ const KEY_FIELDSETS_METRIC_PROPERTY = 'DefaultMetric';
 // FieldDefinition properties
 const KEY_FIELDDEFINITIONS_NAME = 'Name';
 const KEY_FIELDDEFINITIONS_TYPE = 'DataType';
-const KEY_FIELDDEFINITIONS_ISMETRIC = 'IsMetric';
