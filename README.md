@@ -1,81 +1,24 @@
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-[![Discord][discussion-shield]][discussion-url]
+![Kentico.Xperience.Libraries 13.0.0](https://img.shields.io/badge/Kentico.Xperience.Libraries-v13.0.0-orange)
+[![Stack Overflow](https://img.shields.io/badge/Stack%20Overflow-ASK%20NOW-FE7A16.svg?logo=stackoverflow&logoColor=white)](https://stackoverflow.com/tags/kentico)
 
+# Xperience Google Data Studio Integration
 
+Create stunning and flexible [Google Data Studio](https://marketingplatform.google.com/about/data-studio/) reports which display data from your Xperience administration website using this custom [connector](https://support.google.com/datastudio/answer/6318763)!
 
-<!-- ABOUT THE PROJECT -->
-## About The Project
+![Sample report](/img/report-sample.png)
 
-Please put here some general information about your Intergration / App / Solution.
+## Installation
 
+1.  Download the _Kentico.Xperience.Google.DataStudio_ ZIP package by locating the latest [Release](https://github.com/Kentico/xperience-google-datastudio/releases).
+1. In the Xperience adminstration, open the __Sites__ application.
+1. [Import](https://docs.xperience.io/deploying-websites/exporting-and-importing-sites/importing-a-site-or-objects) the downloaded package with the __Import files__ and __Import code files__ [settings](https://docs.xperience.io/deploying-websites/exporting-and-importing-sites/importing-a-site-or-objects#Importingasiteorobjects-Import-Objectselectionsettings) enabled.
+1. Perform the [necessary steps](https://docs.xperience.io/deploying-websites/exporting-and-importing-sites/importing-a-site-or-objects#Importingasiteorobjects-Importingpackageswithfiles) to include the following imported folder in your project:
+   - `/CMSModules/Kentico.Xperience.Google.DataStudio`
 
-
-<!-- GETTING STARTED -->
-## Getting Started
-
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
-
-### Prerequisites
-
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
-
-### Installation
-
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
-
-1. Get a free API Key at ... 
-2. Clone the repo
-   ```sh
-   git clone ...
-   ```
-3. Install
-4. Enter your API ...
-
-
-
-<!-- USAGE EXAMPLES -->
-## Usage
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](put URL to documentation here)_
-
-
-
-<!-- CONTRIBUTING -->
 ## Contributing
 
-For Contributing please see  <a href="./CONTRIBUTING.md">`CONTRIBUTING.md`</a> for more information.
+Please see [`CONTRIBUTING.md`](CONTRIBUTING.md) for more information.
 
-
-
-<!-- LICENSE -->
 ## License
 
 Distributed under the MIT License. See [`LICENSE.md`](./LICENSE.md) for more information.
-
-
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://github.com/Kentico/Home/wiki/Checklist-for-publishing-a-new-OS-project#badges-->
-[contributors-shield]: https://img.shields.io/github/contributors/Kentico/kontent-custom-element-samples.svg?style=for-the-badge
-[contributors-url]: https://github.com/Kentico/repo-template/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/Kentico/kontent-custom-element-samples.svg?style=for-the-badge
-[forks-url]: https://github.com/Kentico/repo-template/network/members
-[stars-shield]: https://img.shields.io/github/stars/Kentico/kontent-custom-element-samples.svg?style=for-the-badge
-[stars-url]: https://github.com/Kentico/repo-template/stargazers
-[issues-shield]: https://img.shields.io/github/issues/Kentico/kontent-custom-element-samples.svg?style=for-the-badge
-[issues-url]:https://github.com/Kentico/repo-template/issues
-[license-shield]: https://img.shields.io/github/license/Kentico/kontent-custom-element-samples.svg?style=for-the-badge
-[license-url]:https://github.com/Kentico/repo-template/blob/master/LICENSE.md
-[discussion-shield]: https://img.shields.io/discord/821885171984891914?color=%237289DA&label=Kontent%20Discord&logo=discord
-[discussion-url]: https://discord.com/invite/SKCxwPtevJ
