@@ -1,4 +1,5 @@
 ﻿using CMS.Core;
+using CMS.Helpers;
 using CMS.Scheduler;
 
 using Kentico.Xperience.Google.DataStudio.Services;
@@ -12,11 +13,16 @@ namespace Kentico.Xperience.Google.DataStudio
     /// </summary>
     public class DataStudioReportTask : ITask
     {
+        public const string CACHE_DEPENDENCY = "gds|cachedependency";
+
+
         public string Execute(TaskInfo task)
         {
             try
             {
+                CacheHelper.TouchKey(CACHE_DEPENDENCY);
                 Service.Resolve<IDataStudioReportGenerator>().GenerateReport();
+
                 return String.Empty;
             }
             catch(Exception ex)

@@ -15,6 +15,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace Kentico.Xperience.Google.DataStudio.Controllers
@@ -24,13 +25,40 @@ namespace Kentico.Xperience.Google.DataStudio.Controllers
     /// </summary>
     public class DataStudioController : ApiController
     {
+        private string StartTime
+        {
+            get
+            {
+                return QueryHelper.GetString("start", String.Empty);
+            }
+        }
+
+
+        private string EndTime
+        {
+            get
+            {
+                return QueryHelper.GetString("end", String.Empty);
+            }
+        }
+
+
+        private string ObjectTypes
+        {
+            get
+            {
+                return QueryHelper.GetString("objectTypes", String.Empty);
+            }
+        }
+
+
         /// <summary>
         /// Reads the phyiscal report file and returns the requested data based on query string parameters
         /// for date filtering and object type(s).
         /// </summary>
         /// <returns>The JSON representation of <see cref="DataStudioReport.Data"/>.</returns>
         [HttpGet]
-        public HttpResponseMessage GetReportData()
+        public async Task<HttpResponseMessage> GetReportData()
         {
             var user = BasicAuthenticate();
             if (user == null)
@@ -38,16 +66,29 @@ namespace Kentico.Xperience.Google.DataStudio.Controllers
                 return Request.CreateResponse(HttpStatusCode.Unauthorized);
             }
 
-            var report = LoadReport();
-            if (report == null)
+            var progressiveCache = Service.Resolve<IProgressiveCache>();
+            var data = await progressiveCache.LoadAsync(async cs =>
             {
-                return Request.CreateResponse(HttpStatusCode.NotFound);
+                var report = await LoadReport().ConfigureAwait(false);
+                if (report == null)
+                {
+                    cs.Cached = false;
+                    return null;
+                }
+
+                ApplyObjectTypeFilter(report);
+                ApplyDateFilter(report);
+
+                cs.CacheDependency = CacheHelper.GetCacheDependency(DataStudioReportTask.CACHE_DEPENDENCY);
+                
+                return report.Data;
+            }, new CacheSettings(TimeSpan.FromMinutes(60).TotalMinutes, $"gds|getdata|{StartTime}|{EndTime}|{ObjectTypes}")).ConfigureAwait(false);  
+            if (data == null)
+            {
+                Request.CreateResponse(HttpStatusCode.NotFound);
             }
 
-            ApplyObjectTypeFilter(report);
-            ApplyDateFilter(report);
-
-            return Request.CreateResponse(HttpStatusCode.OK, report.Data);
+            return Request.CreateResponse(HttpStatusCode.OK, data);
         }
 
 
@@ -57,7 +98,7 @@ namespace Kentico.Xperience.Google.DataStudio.Controllers
         /// </summary>
         /// <returns>The JSON representation of <see cref="DataStudioReport.FieldSets"/>.</returns>
         [HttpGet]
-        public HttpResponseMessage GetReportFields()
+        public async Task<HttpResponseMessage> GetReportFields()
         {
             var user = BasicAuthenticate();
             if (user == null)
@@ -65,13 +106,26 @@ namespace Kentico.Xperience.Google.DataStudio.Controllers
                 return Request.CreateResponse(HttpStatusCode.Unauthorized);
             }
 
-            var report = LoadReport();
-            if (report == null)
+            var progressiveCache = Service.Resolve<IProgressiveCache>();
+            var fieldSets = await progressiveCache.LoadAsync(async cs =>
             {
-                return Request.CreateResponse(HttpStatusCode.NotFound);
+                var report = await LoadReport().ConfigureAwait(false);
+                if (report == null)
+                {
+                    cs.Cached = false;
+                    return null;
+                }
+
+                cs.CacheDependency = CacheHelper.GetCacheDependency(DataStudioReportTask.CACHE_DEPENDENCY);
+
+                return report.FieldSets;
+            }, new CacheSettings(TimeSpan.FromMinutes(60).TotalMinutes, $"gds|getreportfields")).ConfigureAwait(false);
+            if (fieldSets == null)
+            {
+                Request.CreateResponse(HttpStatusCode.NotFound);
             }
 
-            return Request.CreateResponse(HttpStatusCode.OK, report.FieldSets);
+            return Request.CreateResponse(HttpStatusCode.OK, fieldSets);
         }
 
 
@@ -100,15 +154,13 @@ namespace Kentico.Xperience.Google.DataStudio.Controllers
         /// <param name="report">The report to filter the data of.</param>
         private void ApplyDateFilter(DataStudioReport report)
         {
-            var start = QueryHelper.GetString("start", String.Empty);
-            var end = QueryHelper.GetString("end", String.Empty);
-            if (String.IsNullOrEmpty(start) || String.IsNullOrEmpty(end))
+            if (String.IsNullOrEmpty(StartTime) || String.IsNullOrEmpty(EndTime))
             {
                 return;
             }
 
-            var startDate = DateTime.Parse(start);
-            var endDate = DateTime.Parse(end);
+            var startDate = DateTime.Parse(StartTime);
+            var endDate = DateTime.Parse(EndTime);
             endDate = endDate.AddHours(23).AddMinutes(59).AddSeconds(59).AddMilliseconds(999);
             var dateFilterFields = report.FieldSets
                 .Where(set => !String.IsNullOrEmpty(set.DateFilterField))
@@ -134,13 +186,12 @@ namespace Kentico.Xperience.Google.DataStudio.Controllers
         /// <param name="report">The report to filter the data of.</param>
         private void ApplyObjectTypeFilter(DataStudioReport report)
         {
-            var objectTypes = QueryHelper.GetString("objectTypes", String.Empty);
-            if (String.IsNullOrEmpty(objectTypes))
+            if (String.IsNullOrEmpty(ObjectTypes))
             {
                 return;
             }
 
-            var typeArray = objectTypes.Split(',');
+            var typeArray = ObjectTypes.Split(',');
             report.Data = report.Data.Where(obj => {
                 var propName = obj.Properties().FirstOrDefault().Name;
                 var parts = propName.Split('.');
@@ -188,7 +239,7 @@ namespace Kentico.Xperience.Google.DataStudio.Controllers
         }
 
 
-        private DataStudioReport LoadReport()
+        private async Task<DataStudioReport> LoadReport()
         {
             var reportPath = "\\App_Data\\CMSModules\\Kentico.Xperience.Google.DataStudio\\datastudio.json";
             var fullPath = $"{SystemContext.WebApplicationPhysicalPath}\\{reportPath}";
@@ -199,7 +250,8 @@ namespace Kentico.Xperience.Google.DataStudio.Controllers
 
             using (StreamReader r = new StreamReader(fullPath))
             {
-                return JsonConvert.DeserializeObject<DataStudioReport>(r.ReadToEnd());
+                var reportText = await r.ReadToEndAsync();
+                return JsonConvert.DeserializeObject<DataStudioReport>(reportText);
             }
         }
     }
