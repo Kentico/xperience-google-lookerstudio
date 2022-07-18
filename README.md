@@ -27,7 +27,7 @@ To modify the default list of fields, you can handle the `GetFieldSets` method w
 
 ```cs
 [assembly: RegisterImplementation(typeof(IReportSchemaProvider), typeof(CustomReportSchemaProvider), Lifestyle = Lifestyle.Singleton, Priority = RegistrationPriority.Default)]
-namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
+namespace MySite.DataStudio
 {
     /// <summary>
     /// Custom implementation of <see cref="IReportSchemaProvider"/>.
@@ -73,12 +73,49 @@ public IEnumerable<FieldSet> GetFieldSets()
 }
 ```
 
+> :bulb: When creating a new `FieldSet`, always include the `DateFilterField` if supported by the object type, and include that field in the `Fields` list. This ensures that reports can display the correct data for the selected timeframe. This field is generally the object's "created on" date- see above for an example.
+
+### Data protection
+
+Because the personal information of your visitors is transmitted to Google's servers, it is important to keep [GDPR](https://docs.xperience.io/configuring-xperience/data-protection) in mind while using this integration. Out-of-the-box, there is basic support for anonymizing the IDs of all data records, such as a contact's ID. If you are creating your own `FieldDefinitions`, we recommend setting `Anonymize` to _true_ for any field containing an ID:
+
+```cs
+new FieldDefinition {
+    Name = nameof(ContactInfo.ContactID),
+    DataType = DataStudioFieldType.TEXT,
+    Anonymize = true
+}
+```
+
+When the report is generated, the IDs will be hashed using a salt that is diposed after the report is finished generating. This ensures that a record in the report cannot be correlated to any specific record in your database. If addition functionality is required to protect your visitor's data, it can be implemented by your developers. Aside from [customizing the fields in the report](#configuring-report-fields), the entire report generation process can be altered using a custom implementation of [`IDataStudioReportGenerator`](/src/Kentico.Xperience.Google.DataStudio/Services/IDataStudioReportGenerator.cs):
+
+```cs
+[assembly: RegisterImplementation(typeof(IDataStudioReportGenerator), typeof(CustomDataStudioReportGenerator), Lifestyle = Lifestyle.Singleton, Priority = RegistrationPriority.Default)]
+namespace MySite.DataStudio
+{
+    /// <summary>
+    /// Custom implementation of <see cref="IDataStudioReportGenerator"/>.
+    /// </summary>
+    public class CustomDataStudioReportGenerator : IDataStudioReportGenerator {
+```
+
+For example, when working with contact-related objects, a custom `GenerateReport()` method can retrieve your website's [consent agreements](https://docs.xperience.io/configuring-xperience/data-protection/gdpr-compliance/working-with-consents) and add only the contacts which have agreed to having their data shared with Google.
+
 ## Adding the Xperience data source
 
 When creating a [new](https://datastudio.google.com/) Google Data Studio report or adding a data source to an existing report, you will find a new "Kentico Xperience" connector to choose:
 
 ![Xperience connector](/img/xperience-connector.png)
 
+Once you authorize the connector, you will be asked to provide a __Path__ which is the absolute URL of your Xperience administration website, e.g. _https://myadmin.com_. In addition, you will need to provide the username and password of an Xperience user to authenticate all Google Data Studio requests. The permissions of this user are not checked- it is only used to ensure there are no unathorized requests to access your report data.
+
+> :warning: If the authentication parameters change (e.g. the user is deleted in Xperience), you must __revoke access__ to the connector and re-authenticate. You can find more information about revoking access [here](https://support.google.com/datastudio/answer/6371135).
+
+Once you have property authenticated, you can begin using the data source in report controls like tables. You can find more information about building reports in Google's documentation, such as the [Table reference](https://support.google.com/datastudio/answer/7189044). One concept that we recommend you read carefully are Google Data Studio's [blends](https://support.google.com/datastudio/answer/9061420). If you are familiar with SQL, this is similar to performing a `JOIN` on multiple tables and will help you retrieve the data you need in your reports.
+
+For example, let's say you want to display a table listing the latest form submission activities on your site with the email address of the contact that submitted the form. To accomplish this, you can create a new blend with two tables: one containing the activity data, and one containing the contact data. In the __Configure join__ menu, link the "ActivityContactID" field from one table to the "ContactID" field of the other table. In the activity table, add a [filter](https://support.google.com/datastudio/answer/6291066) to load only the activities where "ActivityType" equals "bizformsubmit," then add any other dimensions you'd like to display. Once finished, it could look something like this:
+
+![Blend example](/img/blend-example.png)
 
 ## Contributing
 
