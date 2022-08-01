@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 [assembly: RegisterImplementation(typeof(IDataStudioReportGenerator), typeof(DefaultDataStudioReportGenerator), Lifestyle = Lifestyle.Singleton, Priority = RegistrationPriority.SystemDefault)]
 namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
@@ -25,21 +26,19 @@ namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
     /// </summary>
     internal class DefaultDataStudioReportGenerator : IDataStudioReportGenerator
     {
-        private readonly IReportSchemaProvider reportSchemaProvider;
         private readonly IEnumerable<FieldSet> fieldSets;
 
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultDataStudioReportGenerator"/> class.
         /// </summary>
-        public DefaultDataStudioReportGenerator(IReportSchemaProvider reportSchemaProvider)
+        public DefaultDataStudioReportGenerator(IDataStudioFieldSetProvider fieldSetProvider)
         {
-            this.reportSchemaProvider = reportSchemaProvider;
-            fieldSets = reportSchemaProvider.GetFieldSets();
+            fieldSets = fieldSetProvider.GetFieldSets();
         }
 
 
-        public IEnumerable<JObject> GetData(string objectType)
+        public async Task<IEnumerable<JObject>> GetData(string objectType)
         {
             var fieldSet = fieldSets.FirstOrDefault(f => f.ObjectType.Equals(objectType, StringComparison.OrdinalIgnoreCase));
             if (fieldSet == null)
@@ -47,20 +46,20 @@ namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
                 return Enumerable.Empty<JObject>();
             }
 
-            return new DataQuery(objectType, QueryName.GENERALSELECT)
-                .Columns(fieldSet.Fields.Select(f => f.Name))
-                .Result
-                .Tables[0]
-                .AsEnumerable()
-                .Select(row => reportSchemaProvider.ProcessObject(objectType, row))
-                .ToList();
+            var columns = fieldSet.Fields.Select(f => f.Name);
+            var result = await new ObjectQuery(objectType)
+                .Columns(columns)
+                .GetEnumerableTypedResultAsync()
+                .ConfigureAwait(false);
+
+            return result.Select(infoObject => ProcessObject(objectType, infoObject, columns));
         }
 
 
-        public void GenerateReport()
+        public async void GenerateReport()
         {
             // Ensure folder exists
-            var directory = $"{SystemContext.WebApplicationPhysicalPath}\\App_Data\\CMSModules\\Kentico.Xperience.Google.DataStudio";
+            var directory = Path.Combine(SystemContext.WebApplicationPhysicalPath, DataStudioConstants.reportDirectory);
             if (!Directory.Exists(directory))
             {
                 Directory.CreateDirectory(directory);
@@ -70,7 +69,7 @@ namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
             var allData = new List<JObject>();
             foreach (var fieldSet in fieldSets)
             {
-                var objectTypeData = GetData(fieldSet.ObjectType.ToLower());
+                var objectTypeData = await GetData(fieldSet.ObjectType.ToLowerInvariant()).ConfigureAwait(false);
                 AnonymizeData(fieldSet, objectTypeData);
 
                 allData.AddRange(objectTypeData);
@@ -83,7 +82,8 @@ namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
             };
 
             // Write JSON file to filesystem
-            using (StreamWriter file = File.CreateText($"{directory}\\datastudio.json"))
+            var fullPath = Path.Combine(directory, DataStudioConstants.reportName);
+            using (StreamWriter file = File.CreateText(fullPath))
             {
                 new JsonSerializer().Serialize(file, report);
             }
@@ -110,7 +110,7 @@ namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
                 field.DataType = DataStudioFieldType.TEXT;
                 foreach (var obj in data)
                 {
-                    var propToAnonymize = obj.Property($"{fieldSet.ObjectType.ToLower()}.{field.Name}");
+                    var propToAnonymize = obj.Property($"{fieldSet.ObjectType.ToLowerInvariant()}.{field.Name}");
                     if (propToAnonymize == null)
                     {
                         continue;
@@ -121,6 +121,24 @@ namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
                     propToAnonymize.Value = anonValue;
                 }
             }
+        }
+
+
+        private JObject ProcessObject(string objectType, BaseInfo infoObject, IEnumerable<string> columns)
+        {
+            var obj = new JObject();
+            foreach (var column in columns)
+            {
+                var columnValue = infoObject.GetValue(column);
+                if (columnValue == DBNull.Value || columnValue == null || String.IsNullOrEmpty(columnValue.ToString()))
+                {
+                    continue;
+                }
+
+                obj.Add($"{objectType}.{column}", JToken.FromObject(columnValue));
+            }
+
+            return obj;
         }
     }
 }

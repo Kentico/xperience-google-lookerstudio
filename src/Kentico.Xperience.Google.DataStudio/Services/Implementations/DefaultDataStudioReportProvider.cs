@@ -22,7 +22,7 @@ namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
     /// <summary>
     /// The default implementation of <see cref="IDataStudioReportProvider"/>.
     /// </summary>
-    public class DefaultDataStudioReportProvider : IDataStudioReportProvider
+    internal class DefaultDataStudioReportProvider : IDataStudioReportProvider
     {
         /// <summary>
         /// The cache dependency key which all Google Data Studio report data is dependent on.
@@ -135,8 +135,7 @@ namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
         /// </summary>
         private async Task<DataStudioReport> LoadReport()
         {
-            var reportPath = "App_Data\\CMSModules\\Kentico.Xperience.Google.DataStudio\\datastudio.json";
-            var fullPath = Path.Combine(SystemContext.WebApplicationPhysicalPath, reportPath);
+            var fullPath = Path.Combine(SystemContext.WebApplicationPhysicalPath, DataStudioConstants.reportDirectory, DataStudioConstants.reportName);
             if (!File.Exists(fullPath))
             {
                 return null;

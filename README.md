@@ -21,25 +21,25 @@ To reduce the number of database queries required to display your Xperience data
 
 ### Configuring report fields
 
-The generated report contains certain fields by default, which you can find in [`DataStudioDefaultFieldSets.cs`](/src/Kentico.Xperience.Google.DataStudio/DataStudioDefaultFieldSets.cs). The report fields are defined by [`FieldSets`](/src/Kentico.Xperience.Google.DataStudio/Models/FieldSet.cs) which represent a single object type (like contacts) and its fields which are represented by a list of [`FieldDefinitions`](/src/Kentico.Xperience.Google.DataStudio/Models/FieldDefinition.cs).
+The generated report contains certain fields by default, which you can find in [`DefaultDataStudioFieldSetProvider.cs`](/src/Kentico.Xperience.Google.DataStudio/Services/Implementations/DefaultDataStudioFieldSetProvider.cs). The report fields are defined by [`FieldSets`](/src/Kentico.Xperience.Google.DataStudio/Models/FieldSet.cs) which represent a single object type (like contacts) and its fields which are represented by a list of [`FieldDefinitions`](/src/Kentico.Xperience.Google.DataStudio/Models/FieldDefinition.cs).
 
-To modify the default list of fields, you can handle the `GetFieldSets` method within a custom implementation of [`IReportSchemaProvider`](/src/Kentico.Xperience.Google.DataStudio/Services/IReportSchemaProvider.cs). For example, if your reports only need to display contacts and activities, you can remove the other default `FieldSets`:
+To modify the default list of fields, you can handle the `GetFieldSets` method within a custom implementation of [`IDataStudioFieldSetProvider`](/src/Kentico.Xperience.Google.DataStudio/Services/IDataStudioFieldSetProvider.cs). For example, if your reports only need to display contacts and activities, you can remove the other default `FieldSets`:
 
 ```cs
-[assembly: RegisterImplementation(typeof(IReportSchemaProvider), typeof(CustomReportSchemaProvider), Lifestyle = Lifestyle.Singleton, Priority = RegistrationPriority.Default)]
+[assembly: RegisterImplementation(typeof(IDataStudioFieldSetProvider), typeof(CustomFieldSetProvider), Lifestyle = Lifestyle.Singleton, Priority = RegistrationPriority.Default)]
 namespace MySite.DataStudio
 {
     /// <summary>
-    /// Custom implementation of <see cref="IReportSchemaProvider"/>.
+    /// Custom implementation of <see cref="IDataStudioFieldSetProvider"/>.
     /// </summary>
-    public class CustomReportSchemaProvider : IReportSchemaProvider
+    public class CustomFieldSetProvider : IDataStudioFieldSetProvider
     {
         public IEnumerable<FieldSet> GetFieldSets()
         {
             return new FieldSet[]
             {
-                DataStudioDefaultFieldSets.activityFieldSet,
-                DataStudioDefaultFieldSets.contactFieldSet
+                DataStudioConstants.activityFieldSet,
+                DataStudioConstants.contactFieldSet
             };
         }
 ```
@@ -51,7 +51,7 @@ public IEnumerable<FieldSet> GetFieldSets()
 {
     return new FieldSet[]
     {
-        DataStudioDefaultFieldSets.activityFieldSet,
+        DataStudioConstants.activityFieldSet,
         // Other FieldSets...
         new FieldSet {
           ObjectType = SKUInfo.OBJECT_TYPE_SKU,

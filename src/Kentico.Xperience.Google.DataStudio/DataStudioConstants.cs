@@ -14,11 +14,23 @@ using Kentico.Xperience.Google.DataStudio.Services;
 namespace Kentico.Xperience.Google.DataStudio
 {
     /// <summary>
-    /// Contains pre-defined <see cref="FieldSet"/>s which may be referenced in an implementation
-    /// of <see cref="IReportSchemaProvider"/> to determine the fields of the report.
+    /// Contains constants and pre-defined <see cref="FieldSet"/>s which may be referenced in an implementation
+    /// of <see cref="IDataStudioFieldSetProvider"/> to determine the fields of the report.
     /// </summary>
-    public class DataStudioDefaultFieldSets
+    public class DataStudioConstants
     {
+        /// <summary>
+        /// The application's relative path of the directory which contains the Google Data Studio report.
+        /// </summary>
+        public const string reportDirectory = "App_Data\\CMSModules\\Kentico.Xperience.Google.DataStudio";
+
+
+        /// <summary>
+        /// The filename of the Google Data Studio report.
+        /// </summary>
+        public const string reportName = "datastudio.json";
+
+
         /// <summary>
         /// The default activity <see cref="FieldSet"/>.
         /// </summary>
@@ -83,7 +95,7 @@ namespace Kentico.Xperience.Google.DataStudio
         /// </summary>
         public static FieldSet automationStateFieldSet = new FieldSet
         {
-            ObjectType = "cms.automationstate",
+            ObjectType = AutomationStateInfo.OBJECT_TYPE,
             DateFilterField = nameof(AutomationStateInfo.StateCreated),
             Fields = new FieldDefinition[]
             {
@@ -288,7 +300,7 @@ namespace Kentico.Xperience.Google.DataStudio
         /// </summary>
         public static FieldSet contactGroupMemberFieldSet = new FieldSet
         {
-            ObjectType = "om.contactgroupmember",
+            ObjectType = ContactGroupMemberInfo.OBJECT_TYPE_CONTACT,
             Fields = new FieldDefinition[]
             {
                 new FieldDefinition
