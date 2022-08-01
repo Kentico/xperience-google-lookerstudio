@@ -41,7 +41,7 @@ namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
 
         public IEnumerable<JObject> GetData(string objectType)
         {
-            var fieldSet = fieldSets.FirstOrDefault(f => f.ObjectType == objectType);
+            var fieldSet = fieldSets.FirstOrDefault(f => f.ObjectType.Equals(objectType, StringComparison.OrdinalIgnoreCase));
             if (fieldSet == null)
             {
                 return Enumerable.Empty<JObject>();

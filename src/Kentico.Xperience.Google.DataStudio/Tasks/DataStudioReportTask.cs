@@ -3,24 +3,22 @@ using CMS.Helpers;
 using CMS.Scheduler;
 
 using Kentico.Xperience.Google.DataStudio.Services;
+using Kentico.Xperience.Google.DataStudio.Services.Implementations;
 
 using System;
 
-namespace Kentico.Xperience.Google.DataStudio
+namespace Kentico.Xperience.Google.DataStudio.Tasks
 {
     /// <summary>
     /// An Xperience scheduled task which generates the physical report file.
     /// </summary>
     public class DataStudioReportTask : ITask
     {
-        public const string CACHE_DEPENDENCY = "gds|cachedependency";
-
-
         public string Execute(TaskInfo task)
         {
             try
             {
-                CacheHelper.TouchKey(CACHE_DEPENDENCY);
+                CacheHelper.TouchKey(DefaultDataStudioReportProvider.CACHE_DEPENDENCY);
                 Service.Resolve<IDataStudioReportGenerator>().GenerateReport();
 
                 return String.Empty;
