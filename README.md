@@ -96,7 +96,7 @@ namespace MySite.DataStudio
     /// <summary>
     /// Custom implementation of <see cref="IDataStudioDataProtectionProvider"/>.
     /// </summary>
-    public class CustomDataProtectionProvider : IDataStudioReportGenerator {
+    public class CustomDataProtectionProvider : IDataStudioDataProtectionProvider {
 ```
 
 For example, when working with contact-related objects, the `IsObjectAllowed` method can retrieve your website's [consent agreements](https://docs.xperience.io/configuring-xperience/data-protection/gdpr-compliance/working-with-consents) and add only the contacts which have agreed to having their data shared with Google.
