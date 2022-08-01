@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
 {
     /// <summary>
-    /// Default implementation of <see cref="IReportFieldSetProvider"/>.
+    /// Default implementation of <see cref="IDataStudioFieldSetProvider"/>.
     /// </summary>
     internal class DefaultDataStudioFieldSetProvider : IDataStudioFieldSetProvider
     {

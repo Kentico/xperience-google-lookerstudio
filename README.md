@@ -87,19 +87,19 @@ new FieldDefinition {
 }
 ```
 
-When the report is generated, the IDs will be hashed using a salt that is diposed after the report is finished generating. This ensures that a record in the report cannot be correlated to any specific record in your database. If addition functionality is required to protect your visitor's data, it can be implemented by your developers. Aside from [customizing the fields in the report](#configuring-report-fields), the entire report generation process can be altered using a custom implementation of [`IDataStudioReportGenerator`](/src/Kentico.Xperience.Google.DataStudio/Services/IDataStudioReportGenerator.cs):
+When the report is generated, the IDs will be hashed using a salt that is diposed after the report is finished generating. This ensures that a record in the report cannot be correlated to any specific record in your database. If addition functionality is required to protect your visitor's data, it can be implemented by your developers. Aside from [customizing the fields in the report](#configuring-report-fields), you can also implement your own anonymization method and limit the data in the report via [`IDataStudioDataProtectionProvider`](/src/Kentico.Xperience.Google.DataStudio/Services/IDataStudioDataProtectionProvider.cs):
 
 ```cs
-[assembly: RegisterImplementation(typeof(IDataStudioReportGenerator), typeof(CustomDataStudioReportGenerator), Lifestyle = Lifestyle.Singleton, Priority = RegistrationPriority.Default)]
+[assembly: RegisterImplementation(typeof(IDataStudioDataProtectionProvider), typeof(CustomDataProtectionProvider), Lifestyle = Lifestyle.Singleton, Priority = RegistrationPriority.Default)]
 namespace MySite.DataStudio
 {
     /// <summary>
-    /// Custom implementation of <see cref="IDataStudioReportGenerator"/>.
+    /// Custom implementation of <see cref="IDataStudioDataProtectionProvider"/>.
     /// </summary>
-    public class CustomDataStudioReportGenerator : IDataStudioReportGenerator {
+    public class CustomDataProtectionProvider : IDataStudioReportGenerator {
 ```
 
-For example, when working with contact-related objects, a custom `GenerateReport()` method can retrieve your website's [consent agreements](https://docs.xperience.io/configuring-xperience/data-protection/gdpr-compliance/working-with-consents) and add only the contacts which have agreed to having their data shared with Google.
+For example, when working with contact-related objects, the `IsObjectAllowed` method can retrieve your website's [consent agreements](https://docs.xperience.io/configuring-xperience/data-protection/gdpr-compliance/working-with-consents) and add only the contacts which have agreed to having their data shared with Google.
 
 ## Adding the Xperience data source
 
