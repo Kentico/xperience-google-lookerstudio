@@ -20,7 +20,8 @@ namespace Kentico.Xperience.Google.DataStudio.Services
         /// </summary>
         /// <param name="fieldSet">The current <see cref="FieldSet"/> whose data is being hashed.</param>
         /// <param name="data">The anonymous objects to apply hashing to.</param>
-        void AnonymizeData(FieldSet fieldSet, IEnumerable<JObject> data);
+        /// <returns>The <paramref name="data"/> after applying hashing.</returns>
+        List<JObject> AnonymizeData(FieldSet fieldSet, List<JObject> data);
 
 
         /// <summary>

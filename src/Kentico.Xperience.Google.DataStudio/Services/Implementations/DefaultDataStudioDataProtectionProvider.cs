@@ -21,7 +21,7 @@ namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
     /// </summary>
     internal class DefaultDataStudioDataProtectionProvider : IDataStudioDataProtectionProvider
     {
-        public void AnonymizeData(FieldSet fieldSet, IEnumerable<JObject> data)
+        public List<JObject> AnonymizeData(FieldSet fieldSet, List<JObject> data)
         {
             var fieldsToAnonymize = fieldSet.Fields.Where(f => f.Anonymize);
             var hashSettings = new HashSettings(nameof(DefaultDataStudioDataProtectionProvider))
@@ -46,6 +46,8 @@ namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
                     propToAnonymize.Value = anonValue;
                 }
             }
+
+            return data;
         }
 
 

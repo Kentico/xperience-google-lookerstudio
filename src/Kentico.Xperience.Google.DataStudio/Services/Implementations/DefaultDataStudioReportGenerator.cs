@@ -59,7 +59,7 @@ namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
         }
 
 
-        public async void GenerateReport()
+        public async Task GenerateReport()
         {
             // Ensure folder exists
             var directory = Path.Combine(SystemContext.WebApplicationPhysicalPath, DataStudioConstants.reportDirectory);
@@ -73,9 +73,9 @@ namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
             foreach (var fieldSet in fieldSets)
             {
                 var objectTypeData = await GetData(fieldSet.ObjectType.ToLowerInvariant()).ConfigureAwait(false);
-                dataProtectionProvider.AnonymizeData(fieldSet, objectTypeData);
+                var hashedData = dataProtectionProvider.AnonymizeData(fieldSet, objectTypeData.ToList());
 
-                allData.AddRange(objectTypeData);
+                allData.AddRange(hashedData);
             }
 
             var report = new DataStudioReport

@@ -24,6 +24,6 @@ namespace Kentico.Xperience.Google.DataStudio.Services
         /// <summary>
         /// Generates the physical JSON report file.
         /// </summary>
-        void GenerateReport();
+        Task GenerateReport();
     }
 }
