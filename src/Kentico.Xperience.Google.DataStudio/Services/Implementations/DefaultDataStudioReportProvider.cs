@@ -135,7 +135,7 @@ namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
         /// </summary>
         private async Task<DataStudioReport> LoadReport()
         {
-            var fullPath = Path.Combine(SystemContext.WebApplicationPhysicalPath, DataStudioConstants.reportDirectory, DataStudioConstants.reportName);
+            var fullPath = Path.Combine(SystemContext.WebApplicationPhysicalPath, DataStudioConstants.REPORT_DIRECTORY, DataStudioConstants.REPORT_NAME);
             if (!File.Exists(fullPath))
             {
                 return null;

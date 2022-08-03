@@ -62,7 +62,7 @@ namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
         public async Task GenerateReport()
         {
             // Ensure folder exists
-            var directory = Path.Combine(SystemContext.WebApplicationPhysicalPath, DataStudioConstants.reportDirectory);
+            var directory = Path.Combine(SystemContext.WebApplicationPhysicalPath, DataStudioConstants.REPORT_DIRECTORY);
             if (!Directory.Exists(directory))
             {
                 Directory.CreateDirectory(directory);
@@ -73,19 +73,18 @@ namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
             foreach (var fieldSet in fieldSets)
             {
                 var objectTypeData = await GetData(fieldSet.ObjectType.ToLowerInvariant()).ConfigureAwait(false);
-                var hashedData = dataProtectionProvider.AnonymizeData(fieldSet, objectTypeData.ToList());
-
-                allData.AddRange(hashedData);
+                allData.AddRange(objectTypeData);
             }
 
+            var hashedData = dataProtectionProvider.AnonymizeData(fieldSets, allData.ToList());
             var report = new DataStudioReport
             {
                 FieldSets = fieldSets,
-                Data = allData
+                Data = hashedData
             };
 
             // Write JSON file to filesystem
-            var fullPath = Path.Combine(directory, DataStudioConstants.reportName);
+            var fullPath = Path.Combine(directory, DataStudioConstants.REPORT_NAME);
             using (StreamWriter file = File.CreateText(fullPath))
             {
                 new JsonSerializer().Serialize(file, report);

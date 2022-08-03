@@ -22,13 +22,19 @@ namespace Kentico.Xperience.Google.DataStudio
         /// <summary>
         /// The application's relative path of the directory which contains the Google Data Studio report.
         /// </summary>
-        public const string reportDirectory = "App_Data\\CMSModules\\Kentico.Xperience.Google.DataStudio";
+        public const string REPORT_DIRECTORY = "App_Data\\CMSModules\\Kentico.Xperience.Google.DataStudio";
 
 
         /// <summary>
         /// The filename of the Google Data Studio report.
         /// </summary>
-        public const string reportName = "datastudio.json";
+        public const string REPORT_NAME = "datastudio.json";
+
+
+        /// <summary>
+        /// The settings key which stores the ID of the consent to check when generating the report.
+        /// </summary>
+        public const string SETTINGKEY_CONSENTID = "DataStudioConsentID";
 
 
         /// <summary>
