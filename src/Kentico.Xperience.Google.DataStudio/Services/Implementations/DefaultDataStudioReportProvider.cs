@@ -46,7 +46,7 @@ namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
         {
             return await progressiveCache.LoadAsync(async cs =>
             {
-                var report = await LoadReport().ConfigureAwait(false);
+                var report = await LoadReport();
                 if (report == null)
                 {
                     cs.Cached = false;
@@ -67,7 +67,7 @@ namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
         {
             return await progressiveCache.LoadAsync(async cs =>
             {
-                var report = await LoadReport().ConfigureAwait(false);
+                var report = await LoadReport();
                 if (report == null)
                 {
                     cs.Cached = false;

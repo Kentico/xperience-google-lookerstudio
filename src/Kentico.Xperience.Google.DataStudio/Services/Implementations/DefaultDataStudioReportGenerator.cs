@@ -72,7 +72,7 @@ namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
             var allData = new List<JObject>();
             foreach (var fieldSet in fieldSets)
             {
-                var objectTypeData = await GetData(fieldSet.ObjectType.ToLowerInvariant()).ConfigureAwait(false);
+                var objectTypeData = await GetData(fieldSet.ObjectType.ToLowerInvariant());
                 allData.AddRange(objectTypeData);
             }
 
