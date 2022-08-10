@@ -19,7 +19,7 @@ namespace Kentico.Xperience.Google.DataStudio.Tasks
             try
             {
                 CacheHelper.TouchKey(DefaultDataStudioReportProvider.CACHE_DEPENDENCY);
-                Service.Resolve<IDataStudioReportGenerator>().GenerateReport();
+                Service.Resolve<IDataStudioReportGenerator>().GenerateReport().ConfigureAwait(false).GetAwaiter().GetResult();
 
                 return String.Empty;
             }

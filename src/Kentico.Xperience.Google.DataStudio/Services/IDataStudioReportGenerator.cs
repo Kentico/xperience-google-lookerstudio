@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Kentico.Xperience.Google.DataStudio.Services
 {
@@ -17,12 +18,12 @@ namespace Kentico.Xperience.Google.DataStudio.Services
         /// </summary>
         /// <param name="objectType">The object type to retrieve data for.</param>
         /// <returns>A collection of anonymous objects representing the data of the object type.</returns>
-        IEnumerable<JObject> GetData(string objectType);
+        Task<IEnumerable<JObject>> GetData(string objectType);
 
 
         /// <summary>
         /// Generates the physical JSON report file.
         /// </summary>
-        void GenerateReport();
+        Task GenerateReport();
     }
 }

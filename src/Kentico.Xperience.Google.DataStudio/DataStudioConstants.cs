@@ -14,11 +14,29 @@ using Kentico.Xperience.Google.DataStudio.Services;
 namespace Kentico.Xperience.Google.DataStudio
 {
     /// <summary>
-    /// Contains pre-defined <see cref="FieldSet"/>s which may be referenced in an implementation
-    /// of <see cref="IReportSchemaProvider"/> to determine the fields of the report.
+    /// Contains constants and pre-defined <see cref="FieldSet"/>s which may be referenced in an implementation
+    /// of <see cref="IDataStudioFieldSetProvider"/> to determine the fields of the report.
     /// </summary>
-    public class DataStudioDefaultFieldSets
+    public class DataStudioConstants
     {
+        /// <summary>
+        /// The application's relative path of the directory which contains the Google Data Studio report.
+        /// </summary>
+        public const string REPORT_DIRECTORY = "App_Data\\CMSModules\\Kentico.Xperience.Google.DataStudio";
+
+
+        /// <summary>
+        /// The filename of the Google Data Studio report.
+        /// </summary>
+        public const string REPORT_NAME = "datastudio.json";
+
+
+        /// <summary>
+        /// The settings key which stores the ID of the consent to check when generating the report.
+        /// </summary>
+        public const string SETTINGKEY_CONSENTID = "DataStudioConsentID";
+
+
         /// <summary>
         /// The default activity <see cref="FieldSet"/>.
         /// </summary>
@@ -83,7 +101,7 @@ namespace Kentico.Xperience.Google.DataStudio
         /// </summary>
         public static FieldSet automationStateFieldSet = new FieldSet
         {
-            ObjectType = "cms.automationstate",
+            ObjectType = AutomationStateInfo.OBJECT_TYPE,
             DateFilterField = nameof(AutomationStateInfo.StateCreated),
             Fields = new FieldDefinition[]
             {
@@ -201,58 +219,7 @@ namespace Kentico.Xperience.Google.DataStudio
                 new FieldDefinition {
                     Name = nameof(ContactInfo.ContactCreated),
                     DataType = DataStudioFieldType.YEAR_MONTH_DAY_SECOND
-                },
-                /**
-                 * Personal data is not provided by default. Uncomment these lines to send personal data to Google
-                 * Data Studio, but please read https://docs.xperience.io/configuring-xperience/data-protection first!
-                 * 
-                new FieldDefinition {
-                    Name = nameof(ContactInfo.ContactFirstName),
-                    DataType = DataStudioFieldType.TEXT
-                },
-                new FieldDefinition {
-                    Name = nameof(ContactInfo.ContactMiddleName),
-                    DataType = DataStudioFieldType.TEXT
-                },
-                new FieldDefinition {
-                    Name = nameof(ContactInfo.ContactLastName),
-                    DataType = DataStudioFieldType.TEXT
-                },
-                new FieldDefinition {
-                    Name = nameof(ContactInfo.ContactCompanyName),
-                    DataType = DataStudioFieldType.TEXT
-                },
-                new FieldDefinition {
-                    Name = nameof(ContactInfo.ContactAddress1),
-                    DataType = DataStudioFieldType.TEXT
-                },
-                new FieldDefinition {
-                    Name = nameof(ContactInfo.ContactCity),
-                    DataType = DataStudioFieldType.CITY
-                },
-                new FieldDefinition {
-                    Name = nameof(ContactInfo.ContactZIP),
-                    DataType = DataStudioFieldType.TEXT
-                },
-                new FieldDefinition {
-                    Name = nameof(ContactInfo.ContactCountryID),
-                    DataType = DataStudioFieldType.TEXT,
-                    Anonymize = true
-                },
-                new FieldDefinition {
-                    Name = nameof(ContactInfo.ContactStateID),
-                    DataType = DataStudioFieldType.TEXT,
-                    Anonymize = true
-                },
-                new FieldDefinition {
-                    Name = nameof(ContactInfo.ContactEmail),
-                    DataType = DataStudioFieldType.TEXT
-                },
-                new FieldDefinition {
-                    Name = nameof(ContactInfo.ContactJobTitle),
-                    DataType = DataStudioFieldType.TEXT
                 }
-                */
             }
         };
 
@@ -288,7 +255,7 @@ namespace Kentico.Xperience.Google.DataStudio
         /// </summary>
         public static FieldSet contactGroupMemberFieldSet = new FieldSet
         {
-            ObjectType = "om.contactgroupmember",
+            ObjectType = ContactGroupMemberInfo.OBJECT_TYPE_CONTACT,
             Fields = new FieldDefinition[]
             {
                 new FieldDefinition
@@ -366,32 +333,7 @@ namespace Kentico.Xperience.Google.DataStudio
                 {
                     Name = nameof(CustomerInfo.CustomerCreated),
                     DataType = DataStudioFieldType.YEAR_MONTH_DAY_SECOND
-                },
-                /**
-                 * Personal data is not provided by default. Uncomment these lines to send personal data to Google
-                 * Data Studio, but please read https://docs.xperience.io/configuring-xperience/data-protection first!
-                 * 
-                new FieldDefinition
-                {
-                    Name = nameof(CustomerInfo.CustomerFirstName),
-                    DataType = DataStudioFieldType.TEXT
-                },
-                new FieldDefinition
-                {
-                    Name = nameof(CustomerInfo.CustomerLastName),
-                    DataType = DataStudioFieldType.TEXT
-                },
-                new FieldDefinition
-                {
-                    Name = nameof(CustomerInfo.CustomerEmail),
-                    DataType = DataStudioFieldType.TEXT
-                },
-                new FieldDefinition
-                {
-                    Name = nameof(CustomerInfo.CustomerPhone),
-                    DataType = DataStudioFieldType.TEXT
                 }
-                */
             }
         };
 
@@ -654,27 +596,7 @@ namespace Kentico.Xperience.Google.DataStudio
                 {
                     Name = nameof(UserInfo.UserCreated),
                     DataType = DataStudioFieldType.YEAR_MONTH_DAY_SECOND
-                },
-                /**
-                 * Personal data is not provided by default. Uncomment these lines to send personal data to Google
-                 * Data Studio, but please read https://docs.xperience.io/configuring-xperience/data-protection first!
-                 * 
-                new FieldDefinition
-                {
-                    Name = nameof(UserInfo.UserName),
-                    DataType = DataStudioFieldType.TEXT
-                },
-                new FieldDefinition
-                {
-                    Name = nameof(UserInfo.FullName),
-                    DataType = DataStudioFieldType.TEXT
-                },
-                new FieldDefinition
-                {
-                    Name = nameof(UserInfo.Email),
-                    DataType = DataStudioFieldType.TEXT
                 }
-                */
             }
         };
 

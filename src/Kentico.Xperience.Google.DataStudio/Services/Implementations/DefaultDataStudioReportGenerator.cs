@@ -2,7 +2,6 @@
 using CMS.Base;
 using CMS.Core;
 using CMS.DataEngine;
-using CMS.Helpers;
 
 using Kentico.Xperience.Google.DataStudio.Models;
 using Kentico.Xperience.Google.DataStudio.Services;
@@ -16,6 +15,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 [assembly: RegisterImplementation(typeof(IDataStudioReportGenerator), typeof(DefaultDataStudioReportGenerator), Lifestyle = Lifestyle.Singleton, Priority = RegistrationPriority.SystemDefault)]
 namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
@@ -25,21 +25,21 @@ namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
     /// </summary>
     internal class DefaultDataStudioReportGenerator : IDataStudioReportGenerator
     {
-        private readonly IReportSchemaProvider reportSchemaProvider;
+        private readonly IDataStudioDataProtectionService dataProtectionService;
         private readonly IEnumerable<FieldSet> fieldSets;
 
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultDataStudioReportGenerator"/> class.
         /// </summary>
-        public DefaultDataStudioReportGenerator(IReportSchemaProvider reportSchemaProvider)
+        public DefaultDataStudioReportGenerator(IDataStudioFieldSetProvider fieldSetProvider, IDataStudioDataProtectionService dataProtectionService)
         {
-            this.reportSchemaProvider = reportSchemaProvider;
-            fieldSets = reportSchemaProvider.GetFieldSets();
+            fieldSets = fieldSetProvider.GetFieldSets();
+            this.dataProtectionService = dataProtectionService;
         }
 
 
-        public IEnumerable<JObject> GetData(string objectType)
+        public async Task<IEnumerable<JObject>> GetData(string objectType)
         {
             var fieldSet = fieldSets.FirstOrDefault(f => f.ObjectType.Equals(objectType, StringComparison.OrdinalIgnoreCase));
             if (fieldSet == null)
@@ -47,20 +47,27 @@ namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
                 return Enumerable.Empty<JObject>();
             }
 
-            return new DataQuery(objectType, QueryName.GENERALSELECT)
-                .Columns(fieldSet.Fields.Select(f => f.Name))
-                .Result
-                .Tables[0]
-                .AsEnumerable()
-                .Select(row => reportSchemaProvider.ProcessObject(objectType, row))
-                .ToList();
+            var columns = fieldSet.Fields.Select(f => f.Name);
+            var result = await new ObjectQuery(objectType)
+                .Columns(columns)
+                .GetEnumerableTypedResultAsync();
+            var processedObjects = new List<JObject>();
+            foreach (var infoObject in result)
+            {
+                if (await dataProtectionService.IsObjectAllowed(infoObject))
+                {
+                    processedObjects.Add(ProcessObject(objectType, infoObject, columns));
+                }
+            }
+
+            return processedObjects;
         }
 
 
-        public void GenerateReport()
+        public async Task GenerateReport()
         {
             // Ensure folder exists
-            var directory = $"{SystemContext.WebApplicationPhysicalPath}\\App_Data\\CMSModules\\Kentico.Xperience.Google.DataStudio";
+            var directory = Path.Combine(SystemContext.WebApplicationPhysicalPath, DataStudioConstants.REPORT_DIRECTORY);
             if (!Directory.Exists(directory))
             {
                 Directory.CreateDirectory(directory);
@@ -70,57 +77,41 @@ namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
             var allData = new List<JObject>();
             foreach (var fieldSet in fieldSets)
             {
-                var objectTypeData = GetData(fieldSet.ObjectType.ToLower());
-                AnonymizeData(fieldSet, objectTypeData);
-
+                var objectTypeData = await GetData(fieldSet.ObjectType.ToLowerInvariant());
                 allData.AddRange(objectTypeData);
             }
 
+            var hashedData = dataProtectionService.AnonymizeData(fieldSets, allData.ToList());
             var report = new DataStudioReport
             {
                 FieldSets = fieldSets,
-                Data = allData
+                Data = hashedData
             };
 
             // Write JSON file to filesystem
-            using (StreamWriter file = File.CreateText($"{directory}\\datastudio.json"))
+            var fullPath = Path.Combine(directory, DataStudioConstants.REPORT_NAME);
+            using (StreamWriter file = File.CreateText(fullPath))
             {
                 new JsonSerializer().Serialize(file, report);
             }
         }
 
 
-        /// <summary>
-        /// Converts the value of any field where <see cref="FieldDefinition.Anonymize"/> is true into
-        /// a hashed value.
-        /// </summary>
-        /// <param name="fieldSet">The current <see cref="FieldSet"/> whose data is being hashed.</param>
-        /// <param name="data">The anonymous objects to apply hashing to.</param>
-        private void AnonymizeData(FieldSet fieldSet, IEnumerable<JObject> data)
+        private JObject ProcessObject(string objectType, BaseInfo infoObject, IEnumerable<string> columns)
         {
-            var fieldsToAnonymize = fieldSet.Fields.Where(f => f.Anonymize);
-            var hashSettings = new HashSettings(nameof(DefaultDataStudioReportGenerator))
+            var obj = new JObject();
+            foreach (var column in columns)
             {
-                HashStringSaltOverride = Guid.NewGuid().ToString()
-
-            };
-            foreach (var field in fieldsToAnonymize)
-            {
-                // Data type for anonymized field must be text
-                field.DataType = DataStudioFieldType.TEXT;
-                foreach (var obj in data)
+                var columnValue = infoObject.GetValue(column);
+                if (columnValue == DBNull.Value || columnValue == null || String.IsNullOrEmpty(columnValue.ToString()))
                 {
-                    var propToAnonymize = obj.Property($"{fieldSet.ObjectType.ToLower()}.{field.Name}");
-                    if (propToAnonymize == null)
-                    {
-                        continue;
-                    }
-
-                    var existingValue = propToAnonymize.Value.Value<string>();
-                    var anonValue = ValidationHelper.GetHashString(existingValue, hashSettings);
-                    propToAnonymize.Value = anonValue;
+                    continue;
                 }
+
+                obj.Add($"{objectType}.{column}", JToken.FromObject(columnValue));
             }
+
+            return obj;
         }
     }
 }

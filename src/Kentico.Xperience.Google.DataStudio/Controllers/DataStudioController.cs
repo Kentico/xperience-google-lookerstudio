@@ -89,7 +89,7 @@ namespace Kentico.Xperience.Google.DataStudio.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
-            var data = await reportProvider.GetReportData(StartTime, EndTime, ObjectTypes).ConfigureAwait(false);
+            var data = await reportProvider.GetReportData(StartTime, EndTime, ObjectTypes);
             if (data == null)
             {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
@@ -105,7 +105,7 @@ namespace Kentico.Xperience.Google.DataStudio.Controllers
         [HttpGet]
         public async Task<HttpResponseMessage> GetReportFields()
         {
-            var fieldSets = await reportProvider.GetReportFields().ConfigureAwait(false);
+            var fieldSets = await reportProvider.GetReportFields();
             if (fieldSets == null)
             {
                 Request.CreateResponse(HttpStatusCode.NotFound);
