@@ -75,9 +75,24 @@ public IEnumerable<FieldSet> GetFieldSets()
 
 > :bulb: When creating a new `FieldSet`, always include the `DateFilterField` if supported by the object type, and include that field in the `Fields` list. This ensures that reports can display the correct data for the selected timeframe. This field is generally the object's "created on" date- see above for an example.
 
-### Data protection
+## Data protection
 
-Because the personal information of your visitors is transmitted to Google's servers, it is important to keep [GDPR](https://docs.xperience.io/configuring-xperience/data-protection) in mind while using this integration. Out-of-the-box, there is basic support for anonymizing the IDs of all data records, such as a contact's ID. If you are creating your own `FieldDefinitions`, we recommend setting `Anonymize` to _true_ for any field containing an ID:
+Because the personal information of your visitors is transmitted to Google's servers, it is important to keep [GDPR](https://docs.xperience.io/configuring-xperience/data-protection) in mind while using this integration. By default, this integration protects your visitor's data using two approaches:
+
+- Anonymizing (hashing) identifiers
+- Checking agreed [consents](https://docs.xperience.io/configuring-xperience/data-protection/gdpr-compliance/working-with-consents)
+
+### Consents
+
+If you are collecting data about your visitors on your website (e.g. via forms or activities), you should already have one or more [consents](https://docs.xperience.io/configuring-xperience/data-protection/gdpr-compliance/working-with-consents) active. We recommend creating another consent which notifies visitors that their data may be sent to Google for reporting purposes. This integration will automatically remove contacts and their activities from the report if they have not agreed to this consent.
+
+To configure this behavior, open the __Settings__ application in the Xperience administration and navigate to __Integration → Google Data Studio__. The setting "Required consent" displays a list of all consents on your site. The default value "(none)" means the integration will not check consent agreements and _all_ contacts/activities will appear in the report. If you select a consent from the list, only the data of contacts who agreed to that consent will appear in the report.
+
+### Anonymization
+
+By default, this integration will anonymize the IDs of all data records, such as a contact's ID. When the report is generated, the IDs will be hashed using a salt that is diposed after the report is finished generating. This ensures that a record in the report cannot be correlated to any specific record in your database.
+
+If you are creating your own `FieldDefinitions`, we recommend setting `Anonymize` to _true_ for any field containing an ID:
 
 ```cs
 new FieldDefinition {
@@ -87,19 +102,19 @@ new FieldDefinition {
 }
 ```
 
-When the report is generated, the IDs will be hashed using a salt that is diposed after the report is finished generating. This ensures that a record in the report cannot be correlated to any specific record in your database. If addition functionality is required to protect your visitor's data, it can be implemented by your developers. Aside from [customizing the fields in the report](#configuring-report-fields), you can also implement your own anonymization method and limit the data in the report via [`IDataStudioDataProtectionProvider`](/src/Kentico.Xperience.Google.DataStudio/Services/IDataStudioDataProtectionProvider.cs):
+### Customizing data protection
+
+If additional functionality is required to protect your visitor's data, it can be implemented by your developers. Aside from [customizing the fields in the report](#configuring-report-fields), you can also implement your own anonymization method and limit the data in the report via [`IDataStudioDataProtectionService`](/src/Kentico.Xperience.Google.DataStudio/Services/IDataStudioDataProtectionService.cs):
 
 ```cs
-[assembly: RegisterImplementation(typeof(IDataStudioDataProtectionProvider), typeof(CustomDataProtectionProvider), Lifestyle = Lifestyle.Singleton, Priority = RegistrationPriority.Default)]
+[assembly: RegisterImplementation(typeof(IDataStudioDataProtectionService), typeof(CustomDataProtectionService), Lifestyle = Lifestyle.Singleton, Priority = RegistrationPriority.Default)]
 namespace MySite.DataStudio
 {
     /// <summary>
-    /// Custom implementation of <see cref="IDataStudioDataProtectionProvider"/>.
+    /// Custom implementation of <see cref="IDataStudioDataProtectionService"/>.
     /// </summary>
-    public class CustomDataProtectionProvider : IDataStudioDataProtectionProvider {
+    public class CustomDataProtectionService : IDataStudioDataProtectionService {
 ```
-
-For example, when working with contact-related objects, the `IsObjectAllowed` method can retrieve your website's [consent agreements](https://docs.xperience.io/configuring-xperience/data-protection/gdpr-compliance/working-with-consents) and add only the contacts which have agreed to having their data shared with Google.
 
 ## Adding the Xperience data source
 

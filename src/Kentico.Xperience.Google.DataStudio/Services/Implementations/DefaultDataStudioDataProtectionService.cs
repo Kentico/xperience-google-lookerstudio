@@ -15,33 +15,40 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
-[assembly: RegisterImplementation(typeof(IDataStudioDataProtectionProvider), typeof(DefaultDataStudioDataProtectionProvider), Lifestyle = Lifestyle.Singleton, Priority = RegistrationPriority.SystemDefault)]
+[assembly: RegisterImplementation(typeof(IDataStudioDataProtectionService), typeof(DefaultDataStudioDataProtectionService), Lifestyle = Lifestyle.Singleton, Priority = RegistrationPriority.SystemDefault)]
 namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
 {
     /// <summary>
-    /// Default implementation of <see cref="IDataStudioDataProtectionProvider"/>.
+    /// Default implementation of <see cref="IDataStudioDataProtectionService"/>.
     /// </summary>
-    internal class DefaultDataStudioDataProtectionProvider : IDataStudioDataProtectionProvider
+    internal class DefaultDataStudioDataProtectionService : IDataStudioDataProtectionService
     {
         private readonly IConsentAgreementService consentAgreementService;
+        private readonly IConsentInfoProvider consentInfoProvider;
+        private readonly IContactInfoProvider contactInfoProvider;
         private readonly ISettingsService settingsService;
 
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DefaultDataStudioDataProtectionProvider"/> class.
+        /// Initializes a new instance of the <see cref="DefaultDataStudioDataProtectionService"/> class.
         /// </summary>
-        /// <param name="settingsService"></param>
-        public DefaultDataStudioDataProtectionProvider(ISettingsService settingsService, IConsentAgreementService consentAgreementService)
+        public DefaultDataStudioDataProtectionService(ISettingsService settingsService,
+            IConsentAgreementService consentAgreementService,
+            IConsentInfoProvider consentInfoProvider,
+            IContactInfoProvider contactInfoProvider)
         {
             this.settingsService = settingsService;
             this.consentAgreementService = consentAgreementService;
+            this.consentInfoProvider = consentInfoProvider;
+            this.contactInfoProvider = contactInfoProvider;
         }
 
 
         public List<JObject> AnonymizeData(IEnumerable<FieldSet> fieldSets, List<JObject> data)
         {
-            var hashSettings = new HashSettings(nameof(DefaultDataStudioDataProtectionProvider))
+            var hashSettings = new HashSettings(nameof(DefaultDataStudioDataProtectionService))
             {
                 HashStringSaltOverride = Guid.NewGuid().ToString()
 
@@ -72,7 +79,7 @@ namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
         }
 
 
-        public bool IsObjectAllowed(BaseInfo infoObject)
+        public async Task<bool> IsObjectAllowed(BaseInfo infoObject)
         {
             var consentId = ValidationHelper.GetInteger(settingsService[DataStudioConstants.SETTINGKEY_CONSENTID], 0);
             if (consentId == 0)
@@ -86,7 +93,7 @@ namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
                 return true;
             }
 
-            var consent = ConsentInfo.Provider.Get(consentId);
+            var consent = await consentInfoProvider.GetAsync(consentId).ConfigureAwait(false);
             if (consent == null)
             {
                 throw new InvalidOperationException("The selected consent could not be found.");
@@ -100,7 +107,7 @@ namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
             else if (infoObject is ActivityInfo)
             {
                 var contactId = infoObject.GetIntegerValue(nameof(ActivityInfo.ActivityContactID), 0);
-                contact = ContactInfo.Provider.Get(contactId);
+                contact = await contactInfoProvider.GetAsync(contactId).ConfigureAwait(false);
             }
 
             if (contact == null)

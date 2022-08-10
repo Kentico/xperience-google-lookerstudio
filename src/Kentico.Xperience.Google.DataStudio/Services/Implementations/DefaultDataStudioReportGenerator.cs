@@ -25,17 +25,17 @@ namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
     /// </summary>
     internal class DefaultDataStudioReportGenerator : IDataStudioReportGenerator
     {
-        private readonly IDataStudioDataProtectionProvider dataProtectionProvider;
+        private readonly IDataStudioDataProtectionService dataProtectionService;
         private readonly IEnumerable<FieldSet> fieldSets;
 
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultDataStudioReportGenerator"/> class.
         /// </summary>
-        public DefaultDataStudioReportGenerator(IDataStudioFieldSetProvider fieldSetProvider, IDataStudioDataProtectionProvider dataProtectionProvider)
+        public DefaultDataStudioReportGenerator(IDataStudioFieldSetProvider fieldSetProvider, IDataStudioDataProtectionService dataProtectionService)
         {
             fieldSets = fieldSetProvider.GetFieldSets();
-            this.dataProtectionProvider = dataProtectionProvider;
+            this.dataProtectionService = dataProtectionService;
         }
 
 
@@ -50,12 +50,17 @@ namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
             var columns = fieldSet.Fields.Select(f => f.Name);
             var result = await new ObjectQuery(objectType)
                 .Columns(columns)
-                .GetEnumerableTypedResultAsync()
-                .ConfigureAwait(false);
+                .GetEnumerableTypedResultAsync();
+            var processedObjects = new List<JObject>();
+            foreach (var infoObject in result)
+            {
+                if (await dataProtectionService.IsObjectAllowed(infoObject))
+                {
+                    processedObjects.Add(ProcessObject(objectType, infoObject, columns));
+                }
+            }
 
-            return result
-                .Where(infoObject => dataProtectionProvider.IsObjectAllowed(infoObject))
-                .Select(infoObject => ProcessObject(objectType, infoObject, columns));
+            return processedObjects;
         }
 
 
@@ -76,7 +81,7 @@ namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
                 allData.AddRange(objectTypeData);
             }
 
-            var hashedData = dataProtectionProvider.AnonymizeData(fieldSets, allData.ToList());
+            var hashedData = dataProtectionService.AnonymizeData(fieldSets, allData.ToList());
             var report = new DataStudioReport
             {
                 FieldSets = fieldSets,

@@ -5,6 +5,7 @@ using Kentico.Xperience.Google.DataStudio.Models;
 using Newtonsoft.Json.Linq;
 
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Kentico.Xperience.Google.DataStudio.Services
 {
@@ -12,7 +13,7 @@ namespace Kentico.Xperience.Google.DataStudio.Services
     /// Contains methods which modify the contents of the physical report file to be GDPR compliant.
     /// See <see href="https://docs.xperience.io/configuring-xperience/data-protection"/>.
     /// </summary>
-    public interface IDataStudioDataProtectionProvider
+    public interface IDataStudioDataProtectionService
     {
         /// <summary>
         /// Converts the value of any field where <see cref="FieldDefinition.Anonymize"/> is true into
@@ -30,6 +31,6 @@ namespace Kentico.Xperience.Google.DataStudio.Services
         /// </summary>
         /// <param name="infoObject">The object to verify.</param>
         /// <returns><c>True</c> if the object should be added to the report.</returns>
-        bool IsObjectAllowed(BaseInfo infoObject);
+        Task<bool> IsObjectAllowed(BaseInfo infoObject);
     }
 }
