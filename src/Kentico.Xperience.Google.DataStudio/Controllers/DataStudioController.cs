@@ -60,7 +60,7 @@ namespace Kentico.Xperience.Google.DataStudio.Controllers
                 var types = QueryHelper.GetString("objectTypes", String.Empty);
                 if (String.IsNullOrEmpty(types))
                 {
-                    return null;
+                    return new string[0];
                 }
 
                 return types.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
@@ -84,7 +84,7 @@ namespace Kentico.Xperience.Google.DataStudio.Controllers
         [HttpGet]
         public async Task<HttpResponseMessage> GetReportData()
         {
-            if (ObjectTypes == null || StartTime == DateTime.MinValue || EndTime == DateTime.MaxValue)
+            if (ObjectTypes.Length == 0 || StartTime == DateTime.MinValue || EndTime == DateTime.MaxValue)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }

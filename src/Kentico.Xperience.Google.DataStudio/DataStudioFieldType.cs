@@ -8,7 +8,7 @@ namespace Kentico.Xperience.Google.DataStudio
     /// report, not the format used in the physical report file.
     /// </summary>
     /// <remarks>See <see href="https://developers.google.com/apps-script/reference/data-studio/field-type"/>.</remarks>
-    public class DataStudioFieldType
+    public static class DataStudioFieldType
     {
         /// <summary>
         /// A true or false boolean value.

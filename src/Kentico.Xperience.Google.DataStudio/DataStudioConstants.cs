@@ -17,7 +17,7 @@ namespace Kentico.Xperience.Google.DataStudio
     /// Contains constants and pre-defined <see cref="FieldSet"/>s which may be referenced in an implementation
     /// of <see cref="IDataStudioFieldSetProvider"/> to determine the fields of the report.
     /// </summary>
-    public class DataStudioConstants
+    public static class DataStudioConstants
     {
         /// <summary>
         /// The application's relative path of the directory which contains the Google Data Studio report.
@@ -40,7 +40,7 @@ namespace Kentico.Xperience.Google.DataStudio
         /// <summary>
         /// The default activity <see cref="FieldSet"/>.
         /// </summary>
-        public static FieldSet activityFieldSet = new FieldSet
+        public static readonly FieldSet activityFieldSet = new FieldSet
         {
             ObjectType = ActivityInfo.OBJECT_TYPE,
             DateFilterField = nameof(ActivityInfo.ActivityCreated),
@@ -99,7 +99,7 @@ namespace Kentico.Xperience.Google.DataStudio
         /// <summary>
         /// The default marketing automation state <see cref="FieldSet"/>.
         /// </summary>
-        public static FieldSet automationStateFieldSet = new FieldSet
+        public static readonly FieldSet automationStateFieldSet = new FieldSet
         {
             ObjectType = AutomationStateInfo.OBJECT_TYPE,
             DateFilterField = nameof(AutomationStateInfo.StateCreated),
@@ -149,7 +149,7 @@ namespace Kentico.Xperience.Google.DataStudio
         /// <summary>
         /// The default data protection consent agreement <see cref="FieldSet"/>.
         /// </summary>
-        public static FieldSet consentAgreementFieldSet = new FieldSet
+        public static readonly FieldSet consentAgreementFieldSet = new FieldSet
         {
             ObjectType = ConsentAgreementInfo.OBJECT_TYPE,
             DateFilterField = nameof(ConsentAgreementInfo.ConsentAgreementTime),
@@ -180,7 +180,7 @@ namespace Kentico.Xperience.Google.DataStudio
         /// <summary>
         /// The default data protection consent <see cref="FieldSet"/>.
         /// </summary>
-        public static FieldSet consentFieldSet = new FieldSet
+        public static readonly FieldSet consentFieldSet = new FieldSet
         {
             ObjectType = ConsentInfo.OBJECT_TYPE,
             Fields = new FieldDefinition[]
@@ -205,7 +205,7 @@ namespace Kentico.Xperience.Google.DataStudio
         /// <summary>
         /// The default contact <see cref="FieldSet"/>.
         /// </summary>
-        public static FieldSet contactFieldSet = new FieldSet
+        public static readonly FieldSet contactFieldSet = new FieldSet
         {
             ObjectType = ContactInfo.OBJECT_TYPE,
             DateFilterField = nameof(ContactInfo.ContactCreated),
@@ -227,7 +227,7 @@ namespace Kentico.Xperience.Google.DataStudio
         /// <summary>
         /// The default contact group <see cref="FieldSet"/>.
         /// </summary>
-        public static FieldSet contactGroupFieldSet = new FieldSet
+        public static readonly FieldSet contactGroupFieldSet = new FieldSet
         {
             ObjectType = ContactGroupInfo.OBJECT_TYPE,
             DateFilterField = nameof(ContactGroupInfo.ContactGroupLastModified),
@@ -253,7 +253,7 @@ namespace Kentico.Xperience.Google.DataStudio
         /// <summary>
         /// The default contact group member <see cref="FieldSet"/>.
         /// </summary>
-        public static FieldSet contactGroupMemberFieldSet = new FieldSet
+        public static readonly FieldSet contactGroupMemberFieldSet = new FieldSet
         {
             ObjectType = ContactGroupMemberInfo.OBJECT_TYPE_CONTACT,
             Fields = new FieldDefinition[]
@@ -277,7 +277,7 @@ namespace Kentico.Xperience.Google.DataStudio
         /// <summary>
         /// The default globalization country <see cref="FieldSet"/>.
         /// </summary>
-        public static FieldSet countryFieldSet = new FieldSet
+        public static readonly FieldSet countryFieldSet = new FieldSet
         {
             ObjectType = CountryInfo.OBJECT_TYPE,
             Fields = new FieldDefinition[]
@@ -305,7 +305,7 @@ namespace Kentico.Xperience.Google.DataStudio
         /// <summary>
         /// The default e-commerce customer <see cref="FieldSet"/>.
         /// </summary>
-        public static FieldSet customerFieldSet = new FieldSet
+        public static readonly FieldSet customerFieldSet = new FieldSet
         {
             ObjectType = CustomerInfo.OBJECT_TYPE,
             DateFilterField = nameof(CustomerInfo.CustomerCreated),
@@ -341,7 +341,7 @@ namespace Kentico.Xperience.Google.DataStudio
         /// <summary>
         /// The default e-commerce order <see cref="FieldSet"/>.
         /// </summary>
-        public static FieldSet orderFieldSet = new FieldSet
+        public static readonly FieldSet orderFieldSet = new FieldSet
         {
             ObjectType = OrderInfo.OBJECT_TYPE,
             DateFilterField = nameof(OrderInfo.OrderDate),
@@ -397,7 +397,7 @@ namespace Kentico.Xperience.Google.DataStudio
         /// <summary>
         /// The default contact scoring rule <see cref="FieldSet"/>.
         /// </summary>
-        public static FieldSet ruleFieldSet = new FieldSet
+        public static readonly FieldSet ruleFieldSet = new FieldSet
         {
             ObjectType = RuleInfo.OBJECT_TYPE,
             Fields = new FieldDefinition[]
@@ -466,7 +466,7 @@ namespace Kentico.Xperience.Google.DataStudio
         /// <summary>
         /// The default contact scoring contact rule <see cref="FieldSet"/>.
         /// </summary>
-        public static FieldSet scoreContactRuleFieldSet = new FieldSet
+        public static readonly FieldSet scoreContactRuleFieldSet = new FieldSet
         {
             ObjectType = ScoreContactRuleInfo.OBJECT_TYPE,
             Fields = new FieldDefinition[]
@@ -501,7 +501,7 @@ namespace Kentico.Xperience.Google.DataStudio
         /// <summary>
         /// The default contact scoring score <see cref="FieldSet"/>.
         /// </summary>
-        public static FieldSet scoreFieldSet = new FieldSet
+        public static readonly FieldSet scoreFieldSet = new FieldSet
         {
             ObjectType = ScoreInfo.OBJECT_TYPE,
             Fields = new FieldDefinition[]
@@ -534,7 +534,7 @@ namespace Kentico.Xperience.Google.DataStudio
         /// <summary>
         /// The default site <see cref="FieldSet"/>.
         /// </summary>
-        public static FieldSet siteFieldSet = new FieldSet
+        public static readonly FieldSet siteFieldSet = new FieldSet
         {
             ObjectType = SiteInfo.OBJECT_TYPE,
             Fields = new FieldDefinition[]
@@ -557,7 +557,7 @@ namespace Kentico.Xperience.Google.DataStudio
         /// <summary>
         /// The default globalization state <see cref="FieldSet"/>.
         /// </summary>
-        public static FieldSet stateFieldSet = new FieldSet
+        public static readonly FieldSet stateFieldSet = new FieldSet
         {
             ObjectType = StateInfo.OBJECT_TYPE,
             Fields = new FieldDefinition[]
@@ -580,7 +580,7 @@ namespace Kentico.Xperience.Google.DataStudio
         /// <summary>
         /// The default user <see cref="FieldSet"/>.
         /// </summary>
-        public static FieldSet userFieldSet = new FieldSet
+        public static readonly FieldSet userFieldSet = new FieldSet
         {
             ObjectType = UserInfo.OBJECT_TYPE,
             DateFilterField = nameof(UserInfo.UserCreated),
@@ -604,7 +604,7 @@ namespace Kentico.Xperience.Google.DataStudio
         /// <summary>
         /// The default workflow <see cref="FieldSet"/>.
         /// </summary>
-        public static FieldSet workflowFieldSet = new FieldSet
+        public static readonly FieldSet workflowFieldSet = new FieldSet
         {
             ObjectType = WorkflowInfo.OBJECT_TYPE,
             Fields = new FieldDefinition[]
