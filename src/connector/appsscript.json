@@ -8,7 +8,7 @@
     "name": "Kentico Xperience",
     "company": "Kentico",
     "companyUrl": "https://kentico.com",
-    "logoUrl": "https://raw.githubusercontent.com/Kentico/devnet.kentico.com/master/marketplace/assets/kentico-icon.png",
+    "logoUrl": "https://github.com/Kentico/xperience-google-datastudio/raw/master/img/icon.png",
     "addonUrl": "https://github.com/Kentico/xperience-google-datastudio",
     "supportUrl": "https://github.com/Kentico/xperience-google-datastudio",
     "description": "Displays reports from your Kentico Xperience website."
