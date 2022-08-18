@@ -5,7 +5,7 @@
   "exceptionLogging": "STACKDRIVER",
   "runtimeVersion": "V8",
   "dataStudio": {
-    "name": "Kentico",
+    "name": "Kentico Xperience",
     "company": "Kentico",
     "companyUrl": "https://kentico.com",
     "logoUrl": "https://raw.githubusercontent.com/Kentico/devnet.kentico.com/master/marketplace/assets/kentico-icon.png",

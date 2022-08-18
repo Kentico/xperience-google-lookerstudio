@@ -132,6 +132,8 @@ For example, let's say you want to display a table listing the latest form submi
 
 ![Blend example](/img/blend-example.png)
 
+> :bulb: The ContactEmail field is not available by default. If you want to follow the above example, you need to [add the field](#configuring-report-fields) to your report.
+
 ## Contributing
 
 Please see [`CONTRIBUTING.md`](CONTRIBUTING.md) for more information.
