@@ -5,6 +5,7 @@ using CMS.DataProtection;
 using CMS.Ecommerce;
 using CMS.Globalization;
 using CMS.Membership;
+using CMS.Newsletters;
 using CMS.SiteProvider;
 using CMS.WorkflowEngine;
 
@@ -139,6 +140,28 @@ namespace Kentico.Xperience.Google.DataStudio
                 },
                 new FieldDefinition {
                     Name = nameof(AutomationStateInfo.StateSiteID),
+                    DataType = DataStudioFieldType.TEXT,
+                    Anonymize = true
+                }
+            }
+        };
+
+
+        /// <summary>
+        /// The default newsletter clicked link <see cref="FieldSet"/>.
+        /// </summary>
+        public static readonly FieldSet clickedLinkFieldSet = new FieldSet
+        {
+            ObjectType = ClickedLinkInfo.OBJECT_TYPE,
+            DateFilterField = nameof(ClickedLinkInfo.ClickedLinkTime),
+            Fields = new FieldDefinition[]
+            {
+                new FieldDefinition {
+                    Name = nameof(ClickedLinkInfo.ClickedLinkTime),
+                    DataType = DataStudioFieldType.YEAR_MONTH_DAY_SECOND
+                },
+                new FieldDefinition {
+                    Name = nameof(ClickedLinkInfo.ClickedLinkNewsletterLinkID),
                     DataType = DataStudioFieldType.TEXT,
                     Anonymize = true
                 }
@@ -390,6 +413,90 @@ namespace Kentico.Xperience.Google.DataStudio
                     Name = nameof(OrderInfo.OrderTotalTax),
                     DataType = DataStudioFieldType.NUMBER
                 }
+            }
+        };
+
+
+        /// <summary>
+        /// The default newsletter issue <see cref="FieldSet"/>.
+        /// </summary>
+        public static readonly FieldSet newsletterIssueFieldSet = new FieldSet
+        {
+            ObjectType = IssueInfo.OBJECT_TYPE,
+            DateFilterField = nameof(IssueInfo.IssueMailoutTime),
+            Fields = new FieldDefinition[]
+            {
+                new FieldDefinition
+                {
+                    Name = nameof(IssueInfo.IssueID),
+                    DataType = DataStudioFieldType.TEXT,
+                    Anonymize = true
+                },
+                new FieldDefinition
+                {
+                    Name = nameof(IssueInfo.IssueSiteID),
+                    DataType = DataStudioFieldType.NUMBER,
+                    Anonymize = true
+                },
+                new FieldDefinition
+                {
+                    Name = nameof(IssueInfo.IssueMailoutTime),
+                    DataType = DataStudioFieldType.YEAR_MONTH_DAY_SECOND
+                },
+                new FieldDefinition
+                {
+                    Name = nameof(IssueInfo.IssueStatus),
+                    DataType = DataStudioFieldType.NUMBER
+                },
+                new FieldDefinition
+                {
+                    Name = nameof(IssueInfo.IssueSubject),
+                    DataType = DataStudioFieldType.TEXT
+                },
+                new FieldDefinition
+                {
+                    Name = nameof(IssueInfo.IssueSentEmails),
+                    DataType = DataStudioFieldType.NUMBER
+                },
+                new FieldDefinition
+                {
+                    Name = nameof(IssueInfo.IssueBounces),
+                    DataType = DataStudioFieldType.NUMBER
+                },
+                new FieldDefinition
+                {
+                    Name = nameof(IssueInfo.IssueOpenedEmails),
+                    DataType = DataStudioFieldType.NUMBER
+                },
+                new FieldDefinition
+                {
+                    Name = nameof(IssueInfo.IssueUnsubscribed),
+                    DataType = DataStudioFieldType.NUMBER
+                }
+            }
+        };
+
+
+        /// <summary>
+        /// The default newsletter link <see cref="FieldSet"/>.
+        /// </summary>
+        public static readonly FieldSet newsletterLinkFieldSet = new FieldSet
+        {
+            ObjectType = LinkInfo.OBJECT_TYPE,
+            Fields = new FieldDefinition[]
+            {
+                new FieldDefinition
+                {
+                    Name = nameof(LinkInfo.LinkID),
+                    DataType = DataStudioFieldType.TEXT,
+                    Anonymize = true
+                },
+                new FieldDefinition
+                {
+                    Name = nameof(LinkInfo.LinkIssueID),
+                    DataType = DataStudioFieldType.TEXT,
+                    Anonymize = true
+                },
             }
         };
 

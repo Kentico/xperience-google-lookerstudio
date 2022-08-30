@@ -21,6 +21,7 @@ namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
             {
                 DataStudioConstants.activityFieldSet,
                 DataStudioConstants.automationStateFieldSet,
+                DataStudioConstants.clickedLinkFieldSet,
                 DataStudioConstants.consentAgreementFieldSet,
                 DataStudioConstants.consentFieldSet,
                 DataStudioConstants.contactFieldSet,
@@ -29,6 +30,8 @@ namespace Kentico.Xperience.Google.DataStudio.Services.Implementations
                 DataStudioConstants.countryFieldSet,
                 DataStudioConstants.customerFieldSet,
                 DataStudioConstants.orderFieldSet,
+                DataStudioConstants.newsletterIssueFieldSet,
+                DataStudioConstants.newsletterLinkFieldSet,
                 DataStudioConstants.ruleFieldSet,
                 DataStudioConstants.scoreContactRuleFieldSet,
                 DataStudioConstants.scoreFieldSet,

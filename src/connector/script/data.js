@@ -44,11 +44,17 @@ const getFormattedData = (requestedFields, data) => {
  */
 const formatData = (requestedField, object) => {
   const fieldName = requestedField.getId();
-  if (!Object.keys(object).includes(fieldName)) {
-    return '';
+  const value = object[fieldName];
+
+  if (!value) {
+    switch (requestedField.getType()) {
+    case FieldTypes.NUMBER:
+      return 0;
+    case FieldTypes.TEXT:
+      return '';
+    }
   }
 
-  const value = object[fieldName];
   if (requestedField.getType() === FieldTypes.YEAR_MONTH_DAY_SECOND) {
     return getDataStudioDateTime(value);
   }
