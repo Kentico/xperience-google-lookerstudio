@@ -156,6 +156,12 @@ namespace Kentico.Xperience.Google.DataStudio
             DateFilterField = nameof(ClickedLinkInfo.ClickedLinkTime),
             Fields = new FieldDefinition[]
             {
+                new FieldDefinition
+                {
+                    Name = nameof(ClickedLinkInfo.ClickedLinkID),
+                    DataType = DataStudioFieldType.TEXT,
+                    Anonymize = true
+                },
                 new FieldDefinition {
                     Name = nameof(ClickedLinkInfo.ClickedLinkTime),
                     DataType = DataStudioFieldType.YEAR_MONTH_DAY_SECOND
