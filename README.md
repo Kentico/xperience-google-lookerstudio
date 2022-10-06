@@ -39,7 +39,9 @@ To begin using the Google Data Studio connector immediately after installing the
 
 The generated report contains certain fields by default, which you can find in [`DefaultDataStudioFieldSetProvider.cs`](/src/Kentico.Xperience.Google.DataStudio/Services/Implementations/DefaultDataStudioFieldSetProvider.cs). The report fields are defined by [`FieldSets`](/src/Kentico.Xperience.Google.DataStudio/Models/FieldSet.cs) which represent a single object type (like contacts) and its fields which are represented by a list of [`FieldDefinitions`](/src/Kentico.Xperience.Google.DataStudio/Models/FieldDefinition.cs).
 
-To modify the default list of fields, you can create a custom implementation of [`IDataStudioFieldSetProvider`](/src/Kentico.Xperience.Google.DataStudio/Services/IDataStudioFieldSetProvider.cs) and define the `GetFieldSets` method. For example, if your reports only need to display contacts and activities, you can remove the other default `FieldSets`:
+If you wish to modify the default list of fields, create a custom implementation of [`IDataStudioFieldSetProvider`](/src/Kentico.Xperience.Google.DataStudio/Services/IDataStudioFieldSetProvider.cs). The class must be added under the **CMS\Old_App_Code** folder of your Xperience administration project.
+
+Define the `GetFieldSets` method. For example, if your reports only need to display contacts and activities, you can remove the other default `FieldSets`:
 
 ```cs
 [assembly: RegisterImplementation(typeof(IDataStudioFieldSetProvider), typeof(CustomFieldSetProvider), Lifestyle = Lifestyle.Singleton, Priority = RegistrationPriority.Default)]
@@ -128,7 +130,7 @@ new FieldDefinition {
 
 ### Customize data protection
 
-If additional functionality is required to protect your visitor's data, it can be implemented by your developers. Aside from [customizing the fields in the report](#configure-report-fields), you can also implement your own anonymization method and limit the data in the report via [`IDataStudioDataProtectionService`](/src/Kentico.Xperience.Google.DataStudio/Services/IDataStudioDataProtectionService.cs):
+If additional functionality is required to protect your visitor's data, it can be implemented by your developers. Aside from [customizing the fields in the report](#configure-report-fields), you can also implement your own anonymization method and limit the data in the report. Create a custom implementation of [`IDataStudioDataProtectionService`](/src/Kentico.Xperience.Google.DataStudio/Services/IDataStudioDataProtectionService.cs) under the **CMS\Old_App_Code** folder of your Xperience administration project:
 
 ```cs
 [assembly: RegisterImplementation(typeof(IDataStudioDataProtectionService), typeof(CustomDataProtectionService), Lifestyle = Lifestyle.Singleton, Priority = RegistrationPriority.Default)]
