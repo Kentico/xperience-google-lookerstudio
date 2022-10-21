@@ -1,5 +1,7 @@
 [![Kentico.Xperience.Libraries 13.0.0](https://img.shields.io/badge/Kentico.Xperience.Libraries-v13.0.0-orange)](https://www.nuget.org/packages/Kentico.Xperience.Libraries)
 [![Stack Overflow](https://img.shields.io/badge/Stack%20Overflow-ASK%20NOW-FE7A16.svg?logo=stackoverflow&logoColor=white)](https://stackoverflow.com/tags/kentico)
+[![Privacy Policy](https://img.shields.io/badge/Privacy%20Policy-%20-blue)](https://www.kentico.com/privacy-policy)
+[![Terms of Use](https://img.shields.io/badge/Terms%20of%20Use-%20-blue)](https://www.kentico.com/end-user-license-agreement)
 
 # Xperience Google Data Studio Integration
 

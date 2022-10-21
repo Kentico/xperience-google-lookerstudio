@@ -12,7 +12,7 @@
     "addonUrl": "https://github.com/Kentico/xperience-google-datastudio",
     "privacyPolicyUrl": "https://www.kentico.com/privacy-policy",
     "termsOfServiceUrl": "https://www.kentico.com/end-user-license-agreement",
-    "supportUrl": "https://github.com/Kentico/xperience-google-datastudio",
+    "supportUrl": "https://github.com/Kentico/xperience-google-datastudio/issues",
     "description": "Displays reports from your Kentico Xperience website.",
     "shortDescription": "Displays reports from your Kentico Xperience website.",
     "authType": ["PATH_USER_PASS"],
