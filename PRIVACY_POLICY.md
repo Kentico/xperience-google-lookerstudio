@@ -1,0 +1,1 @@
+Kentico as the author of this software or any other party except Looker Studio does not process any information through this software. All data you provide through this software are only sent from your specified source to your own Looker Studio account.

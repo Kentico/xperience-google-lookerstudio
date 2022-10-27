@@ -5,7 +5,7 @@
 
 # Xperience Google Data Studio Integration
 
-Create flexible [Google Data Studio](https://marketingplatform.google.com/about/data-studio/) reports which display data from your Xperience website. For example, these reports can show information about [contacts](https://docs.xperience.io/x/gQiRBg) and their [activities](https://docs.xperience.io/x/oQiRBg), [email marketing](https://docs.xperience.io/x/-QeRBg) statistics, and more. 
+Create flexible [Google Data Studio](https://marketingplatform.google.com/about/data-studio/) reports which display data from your Xperience website. For example, these reports can show information about [contacts](https://docs.xperience.io/x/gQiRBg) and their [activities](https://docs.xperience.io/x/oQiRBg), [email marketing](https://docs.xperience.io/x/-QeRBg) statistics, and more. Please see our [Terms of Service](/LICENSE.md) and [Privacy Policy](/PRIVACY_POLICY.md) for more information about how your data is used.
 
 Use the following process to set up the integration:
  1. [Install](#installation) the module into your Xperience administration project.
