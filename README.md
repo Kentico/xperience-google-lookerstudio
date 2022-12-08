@@ -7,7 +7,7 @@ Create flexible [Looker Studio](https://cloud.google.com/looker-studio) reports 
 
 Use the following process to set up the integration:
  1. [Install](#installation) the module into your Xperience administration project.
- 2. [Configure exactly which types of data will be available for GDS and generate the report](#generate-the-report-in-xperience).
+ 2. [Configure exactly which types of data will be available for Looker Studio and generate the report](#generate-the-report-in-xperience).
  3. To comply with personal data protection policies, [set up consents and data anonymization](#data-protection).
  4. [Create Looker Studio reports and add a data source](#add-the-xperience-data-source-to-looker-studio-reports) using the *Kentico Xperience* [connector](https://support.google.com/looker-studio/answer/6318763). 
 
@@ -155,7 +155,7 @@ Once you authorize the connector, you will be asked to provide the following:
 
 > :warning: If the authentication parameters change (e.g. the user is deleted in Xperience), you must __revoke access__ to the connector and re-authenticate. You can find more information about revoking access in the [Data credentials](https://support.google.com/looker-studio/answer/6371135) article.
 
-After you have properly authenticated, you can begin using the data source in report controls like tables. You can find more information about building reports in Google's documentation, such as the [Table reference](https://support.google.com/looker-studio/answer/7189044). One concept that we recommend you read carefully are Google Data Studio's [blends](https://support.google.com/looker-studio/answer/9061420). If you are familiar with SQL, this is similar to performing a `JOIN` on multiple tables and will help you retrieve the data you need in your reports.
+After you have properly authenticated, you can begin using the data source in report controls like tables. You can find more information about building reports in Google's documentation, such as the [Table reference](https://support.google.com/looker-studio/answer/7189044). One concept that we recommend you read carefully are Looker Studio's [blends](https://support.google.com/looker-studio/answer/9061420). If you are familiar with SQL, this is similar to performing a `JOIN` on multiple tables and will help you retrieve the data you need in your reports.
 
 For example, let's say you want to display a table listing the latest form submission activities on your site with the email address of the contact that submitted the form. To accomplish this, you can create a new blend with two tables: one containing the activity data, and one containing the contact data. In the **Configure join** menu, link the "ActivityContactID" field from one table to the "ContactID" field of the other table. In the activity table, add a [filter](https://support.google.com/datastudio/answer/6291066) to load only the activities where "ActivityType" equals "bizformsubmit," then add any other dimensions you'd like to display. Once finished, it could look something like this:
 
